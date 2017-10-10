@@ -1,9 +1,17 @@
+.pricing_table:before,
+.pricing_table:after {
+    display: table;
+    content: " ";
+}
+.pricing_table:after {
+    clear: both;
+}
 .pricing_table {
     line-height: 150% !important;
     font-size: 12px;
     margin: 30px auto !important;
-    max-width: 900px;
     padding-top: 10px;
+    position: relative;
 }
 .price_block {
     text-align: center;
@@ -14,15 +22,16 @@
     transition: all .25s;
     position: relative;
     box-sizing: border-box;
-    margin: 0 !important;
+    margin: 0 0 20px !important;
     padding: 0;
     border-bottom: 1px solid transparent
 }
 .pricing_table h3.plan_title {
     text-transform: uppercase;
     padding: 5px 0;
-    background: #333;
-    margin: -10px 0 1px 0
+    color: #fff !important;
+    background: #333 !important;
+    margin: -10px 0 1px !important;
 }
 .price {
     display: table;
@@ -45,7 +54,9 @@
 }
 .features {
     background: #def0f4;
-    color: #000
+    color: #000;
+    margin: 0;
+    padding: 0;
 }
 .features li {
     padding: 8px 15px;
@@ -54,12 +65,12 @@
     list-style-type: none;
     margin: 0 !important;
 }
-.footer {
-    padding: 15px;
+.price_block .footer {
+    padding: 15px 10px;
     background: #def0f4
 }
 .package_buy_link {
-    text-decoration: none;
+    text-decoration: none !important;
     color: #fff !important;
     font-weight: bold;
     border-radius: 5px;
