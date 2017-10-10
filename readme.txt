@@ -1,9 +1,10 @@
 === Responsive Pricing Table ===
 Contributors: sayful
-Tags: plugin, shortcode, pricing table, responsive pricing table, easy pricing table,
+Tags: plugin, shortcode, pricing table, responsive pricing table, easy pricing table
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3LZWQTHEVYWCY
 Requires at least: 3.5
-Tested up to: 4.2
-Stable tag: 1.1.0
+Tested up to: 4.8
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,46 +12,27 @@ A WordPress plugin allow you generate and manage CSS3 pricing table or compariso
 
 == Description ==
 
-A WordPress plugin allow you generate and manage CSS3 pricing table or comparison table with table generator by WordPress Custom Post in the easy way. It it perfect for 4 (Four) pricing/ comparison tables.
+A WordPress plugin allow you generate and manage CSS3 pricing table or comparison table with table generator by WordPress Custom Post in the easy way.
 
 = To create pricing/comparison tables, follow the instructions: =
-
-<ul>
-	<li>Log in to the WordPress Administration Panels.</li>
-	<li>Go to <strong>Responsive Pricing Table -> Pricing Packages -> Add New</strong></li>
-	<li>Fill all the fields and add features as many as you need and then click <strong>Publish</strong></li>
-	<li>At this same way, create as many package as you need.</li>
-</ul>
-
-<ul>
-	<li>After creating Packages, Go to <strong>Responsive Pricing Table -> Pricing Tables -> Add New</strong></li>
-	<li>Give your table title and check whick packages you want to include in the table and click <strong>Publish</strong></li>
-	<li>Copy the generated shortcode and paste in post or page where you want to show pricing table.</li>
-</ul>
+* Log in to the WordPress Administration Panels.
+* Go to **Pricing Table -> Add New**
+* Give a title for your table and scroll down to **Manage Packages**.
+* Add upto 5 packages. You can arrange/rearrange, add or delete packages.
+* After adding all packages, now press **Publish** button.
+* Copy the generated shortcode and paste in post or page where you want to show pricing table.
 
 
 == Installation ==
 
-Installing the plugins is just like installing other WordPress plugins. If you don't know how to install plugins, please review the two options below:
+* From your WordPress dashboard go to **Plugins > Add New**.
+* Search for **Responsive Pricing Table** in **Search Plugins** box.
+* Find the WordPress Plugin named **Responsive Pricing Table** by **Sayful Islam**.
+* Click **Install Now** to install the **Responsive Pricing Table** Plugin.
+* The plugin will begin to download and install.
+* Now just click **Activate** to activate the plugin.
 
-Install by Search
-
-* From your WordPress dashboard, choose 'Add New' under the 'Plugins' category.
-* Search for 'Responsive Pricing Table' a plugin will come called 'Responsive Pricing Table by Sayful Islam' and Click 'Install Now' and confirm your installation by clicking 'ok'
-* The plugin will download and install. Just click 'Activate Plugin' to activate it.
-
-Install by ZIP File
-
-* From your WordPress dashboard, choose 'Add New' under the 'Plugins' category.
-* Select 'Upload' from the set of links at the top of the page (the second link)
-* From here, browse for the zip file included in your plugin titled 'responsive-pricing-table.zip' and click the 'Install Now' button
-* Once installation is complete, activate the plugin to enable its features.
-
-Install by FTP
-
-* Find the directory titles 'responsive-pricing-table' and upload it and all files within to the plugins directory of your WordPress install (WORDPRESS-DIRECTORY/wp-content/plugins/) [e.g. www.yourdomain.com/wp-content/plugins/]
-* From your WordPress dashboard, choose 'Installed Plugins' option under the 'Plugins' category
-* Locate the newly added plugin and click on the 'Activate' link to enable its features.
+If you still need help. visit [WordPress codex](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins)
 
 
 == Frequently Asked Questions ==
@@ -58,13 +40,18 @@ Do you have questions or issues with Responsive Pricing Table? [Ask for support 
 
 == Screenshots ==
 
-1. Screenshot of Pricing Package.
-2. Screenshot of Pricing Package (Add New).
 3. Screenshot of Pricing Tables.
 4. Screenshot of Pricing Tables (Add New).
-5. Screenshot of front-end display of pricing table.
 
 == Changelog ==
+
+= Version 1.2.0 - 2016-12-26 =
+* Merged - **Pricing Packages** has been merged into **Pricing Tables**.
+* Added - Added Preview section on admin page.
+* Added - Made each package sortable as you want.
+* Added - Add new package and delete package from same page.
+* Added - Add new option to highlight particular package.
+* and more improvement on admin interface.
 
 = version 1.1.0 =
 * Fixed some bug
