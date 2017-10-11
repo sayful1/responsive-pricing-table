@@ -7,6 +7,7 @@ if ( ! defined( 'WPINC' ) ) {
 if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 
 	trait Responsive_Pricing_Table_Form {
+
 		public function text( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -15,7 +16,8 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			list( $name, $value ) = $this->field_common( $args );
 
 			echo $this->field_before( $args );
-			echo sprintf( '<input type="text" class="sp-input-text" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name );
+			echo sprintf( '<input type="text" class="sp-input-text" value="%1$s" id="%2$s" name="%3$s">', $value,
+				$args['id'], $name );
 			echo $this->field_after();
 		}
 
@@ -29,7 +31,8 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			$rows = isset( $args['rows'] ) ? $args['rows'] : 6;
 
 			echo $this->field_before( $args );
-			echo sprintf( '<textarea class="sp-input-textarea" id="%2$s" name="%3$s" cols="%4$d" rows="%5$d">%1$s</textarea>', esc_textarea( $value ), $args['id'], $name, $cols, $rows );
+			echo sprintf( '<textarea class="sp-input-textarea" id="%2$s" name="%3$s" cols="%4$d" rows="%5$d">%1$s</textarea>',
+				esc_textarea( $value ), $args['id'], $name, $cols, $rows );
 			echo $this->field_after();
 		}
 
@@ -39,8 +42,8 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			}
 
 			list( $name, $value ) = $this->field_common( $args );
-			$cols = isset( $args['cols'] ) ? $args['cols'] : 35;
 			$rows = isset( $args['rows'] ) ? $args['rows'] : 6;
+			// $cols = isset( $args['cols'] ) ? $args['cols'] : 35;
 
 			echo $this->field_before( $args );
 			ob_start();
@@ -66,7 +69,8 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			$std_value = isset( $args['std'] ) ? $args['std'] : '';
 
 			echo $this->field_before( $args );
-			echo sprintf( '<input type="text" class="colorpicker" value="%1$s" id="%2$s" name="%3$s" data-default-color="%4$s">', $value, $args['id'], $name, $std_value );
+			echo sprintf( '<input type="text" class="colorpicker" value="%1$s" id="%2$s" name="%3$s" data-default-color="%4$s">',
+				$value, $args['id'], $name, $std_value );
 			echo $this->field_after();
 		}
 
@@ -79,7 +83,8 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			$std_value = isset( $args['std'] ) ? $args['std'] : '';
 
 			echo $this->field_before( $args );
-			echo sprintf( '<input type="text" class="sp-input-text datepicker" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name, $std_value );
+			echo sprintf( '<input type="text" class="sp-input-text datepicker" value="%1$s" id="%2$s" name="%3$s">',
+				$value, $args['id'], $name, $std_value );
 			echo $this->field_after();
 		}
 
@@ -89,11 +94,12 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			}
 
 			list( $name, $value ) = $this->field_common( $args );
-			$min = isset( $args['min'] ) ? $args['min'] : null;
-			$max = isset( $args['max'] ) ? $args['max'] : null;
+			// $min = isset( $args['min'] ) ? $args['min'] : null;
+			// $max = isset( $args['max'] ) ? $args['max'] : null;
 
 			echo $this->field_before( $args );
-			echo sprintf( '<input type="number" class="sp-input-text" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name );
+			echo sprintf( '<input type="number" class="sp-input-text" value="%1$s" id="%2$s" name="%3$s">', $value,
+				$args['id'], $name );
 			echo $this->field_after();
 		}
 
@@ -105,9 +111,10 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			list( $name, $value ) = $this->field_common( $args );
 			$checked = ( $value == 'on' ) ? ' checked' : '';
 			$label   = isset( $args['label'] ) ? $args['label'] : '';
+			$class   = isset( $args['class'] ) ? 'class="' . $args['class'] . '"' : '';
 
 			echo $this->field_before( $args );
-			echo sprintf( '<label for="%2$s"><input type="checkbox" %4$s value="" id="%2$s" name="%1$s">%3$s</label>', $name, $args['id'], $label, $checked );
+			echo '<label><input type="checkbox" ' . $checked . ' ' . $class . ' value="on" name="' . $name . '">' . $label . '</label>';
 			echo $this->field_after();
 		}
 
@@ -117,14 +124,13 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			}
 
 			list( $name, $value ) = $this->field_common( $args );
-			$checked  = ( $value == 'on' ) ? ' checked' : '';
 			$multiple = isset( $args['multiple'] ) ? 'multiple' : '';
 
 			echo $this->field_before( $args );
-			echo sprintf( '<select name="%1$s" id="%2$s" class="select2 sp-input-text" %3$s>', $name, $args['id'], $multiple );
+			echo '<select name="' . $name . '" id="' . $args['id'] . '" class="select2 sp-input-text" ' . $multiple . '>';
 			foreach ( $args['options'] as $key => $option ) {
 				$selected = ( $value == $key ) ? ' selected="selected"' : '';
-				echo sprintf( '<option value="%1$s" %3$s>%2$s</option>', $key, $option, $selected );
+				echo '<option value="' . $key . '" ' . $selected . '>' . $option . '</option>';
 			}
 			echo '</select>';
 			echo $this->field_after();

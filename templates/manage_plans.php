@@ -3,7 +3,7 @@
 <div id="rpt_manage_plans">
 	<?php if ( count( $rpt_info ) > 0 ): foreach ( $rpt_info as $rpt ): ?>
 
-        <div data-id="open" class="shapla-toggle shapla-toggle--stroke">
+        <div data-id="closed" class="responsive-pricing-table-package shapla-toggle shapla-toggle--stroke">
 			<span class="shapla-toggle-title">
 				<?php _e( 'Package:', 'responsive-pricing-table' ); ?>
 				<?php echo $rpt['package_title']; ?>
@@ -33,6 +33,7 @@
 					) );
 					$this->checkbox( array(
 						'id'       => 'recommended',
+						'class'    => 'is_recommended_package',
 						'name'     => __( 'Recommended plan', 'responsive-pricing-table' ),
 						'label'    => __( 'Mark as recommended ', 'responsive-pricing-table' ),
 						'desc'     => __( 'Check this to highlight this plan.', 'responsive-pricing-table' ),
@@ -58,8 +59,10 @@
 						'name'     => __( 'Features list', 'responsive-pricing-table' ),
 						'desc'     => array(
 							sprintf( '<strong>%s</strong>', __( 'One feature per line.', 'responsive-pricing-table' ) ),
-							sprintf( '<strong>%s</strong><br>%s', __( 'Add links', 'responsive-pricing-table' ), esc_attr( '<a href="http://example.com">Example</a>' ) ),
-							sprintf( '<strong>%s</strong><br>%s', __( 'Add bold text', 'responsive-pricing-table' ), esc_attr( '<strong>Something important</strong>' ) ),
+							sprintf( '<strong>%s</strong><br>%s', __( 'Add links', 'responsive-pricing-table' ),
+								esc_attr( '<a href="http://example.com">Example</a>' ) ),
+							sprintf( '<strong>%s</strong><br>%s', __( 'Add bold text', 'responsive-pricing-table' ),
+								esc_attr( '<strong>Something important</strong>' ) ),
 						),
 						'multiple' => 'on',
 						'std'      => $rpt['features_list'],
@@ -70,7 +73,7 @@
             </div>
         </div>
 	<?php endforeach; else: ?>
-        <div data-id="open" class="shapla-toggle shapla-toggle--stroke">
+        <div data-id="closed" class="responsive-pricing-table-package shapla-toggle shapla-toggle--stroke">
 		<span class="shapla-toggle-title">
 			<?php _e( 'Package', 'responsive-pricing-table' ); ?>
 		</span>
@@ -96,6 +99,7 @@
 					) );
 					$this->checkbox( array(
 						'id'       => 'recommended',
+						'class'    => 'is_recommended_package',
 						'name'     => __( 'Recommended plan', 'responsive-pricing-table' ),
 						'label'    => __( 'Mark as recommended ', 'responsive-pricing-table' ),
 						'desc'     => __( 'Check this to highlight this plan.', 'responsive-pricing-table' ),
@@ -118,8 +122,10 @@
 						'name'     => __( 'Features list', 'responsive-pricing-table' ),
 						'desc'     => array(
 							sprintf( '<strong>%s</strong>', __( 'One feature per line.', 'responsive-pricing-table' ) ),
-							sprintf( '<strong>%s</strong><br>%s', __( 'Add links', 'responsive-pricing-table' ), esc_attr( '<a href="http://example.com">Example</a>' ) ),
-							sprintf( '<strong>%s</strong><br>%s', __( 'Add bold text', 'responsive-pricing-table' ), esc_attr( '<strong>Something important</strong>' ) ),
+							sprintf( '<strong>%s</strong><br>%s', __( 'Add links', 'responsive-pricing-table' ),
+								esc_attr( '<a href="http://example.com">Example</a>' ) ),
+							sprintf( '<strong>%s</strong><br>%s', __( 'Add bold text', 'responsive-pricing-table' ),
+								esc_attr( '<strong>Something important</strong>' ) ),
 						),
 						'multiple' => 'on',
 					) );

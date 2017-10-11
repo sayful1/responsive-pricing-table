@@ -1,18 +1,26 @@
 (function ($) {
     "use strict";
 
+    var plans_container = $('#rpt_manage_plans');
+
+    function updatePackageIndex() {
+        $('#rpt_manage_plans').find('.responsive-pricing-table-package').each(function (index) {
+            $(this)
+                .find('.is_recommended_package')
+                .attr('name', 'responsive_pricing_table[recommended][' + index + ']');
+        });
+    }
+
     // Initializing Toggle
     $(document).find(".shapla-toggle").each(function () {
         if ($(this).attr('data-id') === 'closed') {
             $(this).accordion({
-                header: '.shapla-toggle-title',
                 collapsible: true,
                 heightStyle: "content",
                 active: false
             });
         } else {
             $(this).accordion({
-                header: '.shapla-toggle-title',
                 collapsible: true,
                 heightStyle: "content"
             });
@@ -28,7 +36,7 @@
     $(document).on('click', '#addNewPackage', function () {
         var _clone = $(".shapla-toggle").first().clone(false, false);
 
-        var _order = $('#rpt_manage_plans').find('.shapla-toggle--stroke').length;
+        var _order = plans_container.find('.shapla-toggle--stroke').length;
 
         _clone.find("textarea, input").val("");
         _clone.find("input[type='checkbox']").prop('checked', false);
@@ -47,6 +55,12 @@
     });
 
     // Make package sortable
-    $('#rpt_manage_plans').sortable();
+    plans_container.sortable({
+        stop: function () {
+            updatePackageIndex();
+        }
+    });
+
+    $(document).on('ready', updatePackageIndex());
 
 })(jQuery);
