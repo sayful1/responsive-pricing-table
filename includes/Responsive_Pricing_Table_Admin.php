@@ -7,12 +7,10 @@ if ( ! defined( 'WPINC' ) ) {
 if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 
 	class Responsive_Pricing_Table_Admin {
+
 		use Responsive_Pricing_Table_Form;
 
-		private $plugin_path;
-
-		public function __construct( $plugin_path ) {
-			$this->plugin_path = $plugin_path;
+		public function __construct() {
 			add_action( 'init', array( $this, 'pricing_tables' ), 0 );
 			add_action( 'save_post', array( $this, 'save_post' ) );
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ), 9 );
@@ -70,14 +68,22 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 		}
 
 		public function add_meta_box() {
-			add_meta_box( "pricing-table-manage-plans", __( "Manage Packages", "responsive-pricing-table" ), array(
-				$this,
-				'manage_plans'
-			), "pricing_tables", "normal", "high" );
-			add_meta_box( "pricing-table-preview", __( "Preview & Usage (Shortcode)", "responsive-pricing-table" ), array(
-				$this,
-				'preview_meta_box'
-			), "pricing_tables", "normal", "low" );
+			add_meta_box(
+				"pricing-table-manage-plans",
+				__( "Manage Packages", "responsive-pricing-table" ),
+				array( $this, 'manage_plans' ),
+				"pricing_tables",
+				"normal",
+				"high"
+			);
+			add_meta_box(
+				"pricing-table-preview",
+				__( "Preview & Usage (Shortcode)", "responsive-pricing-table" ),
+				array( $this, 'preview_meta_box' ),
+				"pricing_tables",
+				"normal",
+				"low"
+			);
 		}
 
 		public function manage_plans() {
@@ -85,7 +91,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			$rpt_info = get_post_meta( $post->ID, "responsive_pricing_table", true );
 			$rpt_info = is_array( $rpt_info ) ? $rpt_info : array();
 			ob_start();
-			require $this->plugin_path . '/templates/manage_plans.php';
+			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/manage_plans.php';
 			$html = ob_get_contents();
 			ob_end_clean();
 			echo $html;
@@ -98,7 +104,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			$packages = is_array( $packages ) ? $packages : array();
 			$columns  = count( $packages );
 			ob_start();
-			require $this->plugin_path . '/templates/shortcode.php';
+			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/shortcode.php';
 			?>
             <hr/><p>
                 <strong><?php echo __( 'Copy the following shortcode and paste in post or page where you want to show.' ); ?></strong><br>
@@ -106,7 +112,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
                         type="text"
                         onmousedown="this.clicked = 1;"
                         onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
-                        onclick="if (this.clicked == 2) this.select(); this.clicked = 0;"
+                        onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
                         value="[show_pricing_table table_id='<?php echo $table_id; ?>']"
                         style="background-color: #f1f1f1; width: 300px; padding: 8px;"
                 >
@@ -175,8 +181,8 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
                 type="text"
                 onmousedown="this.clicked = 1;"
                 onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
-                onclick="if (this.clicked == 2) this.select(); this.clicked = 0;"
-                value="[show_pricing_table table_id='<?php echo get_the_ID(); ?>']"
+                onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
+                value="[show_pricing_table table_id='<?php echo $post_id; ?>']"
                 style="background-color: #f1f1f1; width: 300px; padding: 8px;"
                 ><?php
 			}

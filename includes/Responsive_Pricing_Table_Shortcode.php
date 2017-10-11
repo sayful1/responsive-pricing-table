@@ -8,13 +8,25 @@ if ( ! defined( 'WPINC' ) ) {
  * Pricing table shortcode
  */
 
-class Responsive_Pricing_Table_Shortcode {
-	private $plugin_path;
+class Responsive_Pricing_Table_ShortCode {
 
-	public function __construct( $plugin_path ) {
+	private static $instance;
 
-		$this->plugin_path = $plugin_path;
+	/**
+	 * @return Responsive_Pricing_Table_ShortCode
+	 */
+	public static function init() {
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
+		}
 
+		return self::$instance;
+	}
+
+	/**
+	 * Responsive_Pricing_Table_ShortCode constructor.
+	 */
+	public function __construct() {
 		add_shortcode( "show_pricing_table", array( $this, "shortcode" ) );
 	}
 
@@ -35,7 +47,7 @@ class Responsive_Pricing_Table_Shortcode {
 		}
 
 		ob_start();
-		require $this->plugin_path . '/templates/shortcode.php';
+		require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/shortcode.php';
 		$html = ob_get_contents();
 		ob_end_clean();
 

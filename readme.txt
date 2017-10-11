@@ -4,9 +4,10 @@ Tags: plugin, shortcode, pricing table, responsive pricing table, easy pricing t
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3LZWQTHEVYWCY
 Requires at least: 3.5
 Tested up to: 4.8
-Stable tag: 1.2.0
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Requires PHP: 5.4
+Stable tag: 1.2.1
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 A WordPress plugin allow you generate and manage CSS3 pricing table or comparison table with table generator by WordPress Custom Post in the easy way. 
 
@@ -44,6 +45,11 @@ Do you have questions or issues with Responsive Pricing Table? [Ask for support 
 4. Screenshot of Pricing Tables (Add New).
 
 == Changelog ==
+
+= Version 1.2.1 - 2017-10-11 =
+* Fixed - Fix issue: Post.php edit page categories broken.
+* Tweak - Removed dependency over jquery.livequery.js
+* Tweak - Update admin script.
 
 = Version 1.2.0 - 2016-12-26 =
 * Merged - **Pricing Packages** has been merged into **Pricing Tables**.

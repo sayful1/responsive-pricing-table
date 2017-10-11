@@ -3,9 +3,9 @@
 Plugin Name: 	Responsive Pricing Table
 Plugin URI: 	http://wordpress.org/plugins/responsive-pricing-table/
 Description: 	Dynamic responsive pricing table for WordPress.
-Version: 		1.2.0
+Version: 		1.2.1
 Author: 		Sayful Islam
-Author URI: 	http://sayfulit.com
+Author URI: 	https://sayfulislam.com
 Text Domain: 	responsive-pricing-table
 Domain Path: 	/languages/
 License: 		GPLv2 or later
@@ -21,10 +21,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 	class Responsive_Pricing_Table {
 
 		private $plugin_name = 'responsive-pricing-table';
-		private $plugin_version = '1.2.0';
-		private $plugin_url;
-		private $plugin_path;
-
+		private $plugin_version = '1.2.1';
 		protected static $instance = null;
 
 		/**
@@ -46,7 +43,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 			register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
 			register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivate' ) );
 
-			// add_action( 'plugins_loaded', array( $this, 'textdomain') );
+			add_action( 'init', array( $this, 'load_textdomain' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'front_scripts' ), 20 );
 
@@ -57,14 +54,14 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 		 * Define constants
 		 */
 		private function define_constants() {
-			define( 'RESPONSIVE_PRICING_TABLE_VERSION', $this->plugin_version );
-			define( 'RESPONSIVE_PRICING_TABLE_FILE', __FILE__ );
-			define( 'RESPONSIVE_PRICING_TABLE_PATH', dirname( RESPONSIVE_PRICING_TABLE_FILE ) );
-			define( 'RESPONSIVE_PRICING_TABLE_INCLUDES', RESPONSIVE_PRICING_TABLE_PATH . '/includes' );
-			define( 'RESPONSIVE_PRICING_TABLE_TEMPLATES', RESPONSIVE_PRICING_TABLE_PATH . '/templates' );
-			define( 'RESPONSIVE_PRICING_TABLE_URL', plugins_url( '', RESPONSIVE_PRICING_TABLE_FILE ) );
-			define( 'RESPONSIVE_PRICING_TABLE_ASSETS', RESPONSIVE_PRICING_TABLE_URL . '/assets' );
-			define( 'RESPONSIVE_PRICING_TABLE_UPLOAD_DIR', 'dcf-attachments' );
+			$this->define( 'RESPONSIVE_PRICING_TABLE_VERSION', $this->plugin_version );
+			$this->define( 'RESPONSIVE_PRICING_TABLE_FILE', __FILE__ );
+			$this->define( 'RESPONSIVE_PRICING_TABLE_PATH', dirname( RESPONSIVE_PRICING_TABLE_FILE ) );
+			$this->define( 'RESPONSIVE_PRICING_TABLE_INCLUDES', RESPONSIVE_PRICING_TABLE_PATH . '/includes' );
+			$this->define( 'RESPONSIVE_PRICING_TABLE_TEMPLATES', RESPONSIVE_PRICING_TABLE_PATH . '/templates' );
+			$this->define( 'RESPONSIVE_PRICING_TABLE_URL', plugins_url( '', RESPONSIVE_PRICING_TABLE_FILE ) );
+			$this->define( 'RESPONSIVE_PRICING_TABLE_ASSETS', RESPONSIVE_PRICING_TABLE_URL . '/assets' );
+			$this->define( 'RESPONSIVE_PRICING_TABLE_UPLOAD_DIR', 'dcf-attachments' );
 		}
 
 		/**
@@ -76,6 +73,19 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 		private function define( $name, $value ) {
 			if ( ! defined( $name ) ) {
 				define( $name, $value );
+			}
+		}
+
+		/**
+		 * Load plugin textdomain
+		 */
+		public function load_textdomain() {
+			$locale_file = sprintf( '%1$s-%2$s.mo', 'responsive-pricing-table', get_locale() );
+			$global_file = join( DIRECTORY_SEPARATOR, array( WP_LANG_DIR, 'responsive-pricing-table', $locale_file ) );
+
+			// Look in global /wp-content/languages/carousel-slider folder
+			if ( file_exists( $global_file ) ) {
+				load_textdomain( $this->plugin_name, $global_file );
 			}
 		}
 
@@ -94,17 +104,13 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 			include_once RESPONSIVE_PRICING_TABLE_INCLUDES . '/Responsive_Pricing_Table_Form.php';
 			include_once RESPONSIVE_PRICING_TABLE_INCLUDES . '/Responsive_Pricing_Table_Admin.php';
 
-			new Responsive_Pricing_Table_Admin( $this->plugin_path() );
+			new Responsive_Pricing_Table_Admin();
 		}
 
 		public function frontend_includes() {
 			include_once RESPONSIVE_PRICING_TABLE_INCLUDES . '/Responsive_Pricing_Table_Shortcode.php';
 
-			new Responsive_Pricing_Table_Shortcode( $this->plugin_path() );
-		}
-
-		public function textdomain() {
-			load_plugin_textdomain( 'responsive-pricing-table', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+			Responsive_Pricing_Table_ShortCode::init();
 		}
 
 		public function admin_scripts() {
@@ -115,22 +121,22 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 
 			wp_enqueue_style(
 				$this->plugin_name . '-admin',
-				$this->plugin_url() . '/assets/css/admin.css',
+				RESPONSIVE_PRICING_TABLE_ASSETS . '/css/admin.css',
 				array( 'wp-color-picker' ),
-				$this->plugin_version,
+				RESPONSIVE_PRICING_TABLE_VERSION,
 				'all'
 			);
 
 			wp_enqueue_script(
 				$this->plugin_name . '-admin',
-				$this->plugin_url() . '/assets/js/admin.js',
+				RESPONSIVE_PRICING_TABLE_ASSETS . '/js/admin.js',
 				array(
 					'jquery',
 					'wp-color-picker',
 					'jquery-ui-accordion',
 					'jquery-ui-sortable'
 				),
-				$this->plugin_version,
+				RESPONSIVE_PRICING_TABLE_VERSION,
 				true
 			);
 		}
@@ -140,35 +146,9 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 				$this->plugin_name,
 				RESPONSIVE_PRICING_TABLE_ASSETS . '/css/style.css',
 				array(),
-				$this->plugin_version,
+				RESPONSIVE_PRICING_TABLE_VERSION,
 				'all'
 			);
-		}
-
-		/**
-		 * Plugin path.
-		 *
-		 * @return string Plugin path
-		 */
-		private function plugin_path() {
-			if ( $this->plugin_path ) {
-				return $this->plugin_path;
-			}
-
-			return $this->plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
-		}
-
-		/**
-		 * Plugin url.
-		 *
-		 * @return string Plugin url
-		 */
-		private function plugin_url() {
-			if ( $this->plugin_url ) {
-				return $this->plugin_url;
-			}
-
-			return $this->plugin_url = untrailingslashit( plugins_url( '/', __FILE__ ) );
 		}
 
 		/**

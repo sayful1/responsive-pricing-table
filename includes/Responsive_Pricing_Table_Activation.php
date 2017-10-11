@@ -21,7 +21,11 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Activation' ) ) {
 		 * Responsive_Pricing_Table_Activation constructor.
 		 */
 		public function __construct() {
-			add_action( 'responsive_pricing_table_activation', array( $this, 'upgrade_to_120' ) );
+			add_action( 'responsive_pricing_table_activation', array( $this, 'add_version_number' ) );
+		}
+
+		public function add_version_number() {
+			update_option( 'responsive_pricing_table_version', RESPONSIVE_PRICING_TABLE_VERSION );
 		}
 
 		public function upgrade_to_120() {
@@ -37,7 +41,12 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Activation' ) ) {
 
 		}
 
-		public function package_data( $table_id ) {
+		/**
+		 * @param $table_id
+		 *
+		 * @return array|mixed|object
+		 */
+		private function package_data( $table_id ) {
 			$packages = get_post_meta( $table_id, "_table_packages", true );
 			$packages = json_decode( $packages );
 
