@@ -27,23 +27,28 @@ class Responsive_Pricing_Table_ShortCode {
 	 * Responsive_Pricing_Table_ShortCode constructor.
 	 */
 	public function __construct() {
-		add_shortcode( "show_pricing_table", array( $this, "shortcode" ) );
+		add_shortcode( "show_pricing_table", array( $this, "show_pricing_table" ) );
 	}
 
-	public function shortcode( $atts ) {
+	/**
+	 * @param $args
+	 *
+	 * @return mixed
+	 */
+	public function show_pricing_table( $args ) {
 
 		extract( shortcode_atts( array(
 			'table_id' => '',
-		), $atts ) );
+		), $args ) );
 
 		if ( ! $table_id ) {
-			return;
+			return '';
 		}
 		$packages = get_post_meta( $table_id, "responsive_pricing_table", true );
 		$packages = is_array( $packages ) ? $packages : array();
 		$columns  = count( $packages );
 		if ( $columns < 1 ) {
-			return;
+			return '';
 		}
 
 		ob_start();

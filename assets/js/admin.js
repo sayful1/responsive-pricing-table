@@ -1,7 +1,8 @@
 (function ($) {
     "use strict";
 
-    var plans_container = $('#rpt_manage_plans');
+    var plans_container = $('#rpt_manage_plans'),
+        template = $('#template-responsive-pricing-table-package').html();
 
     function updatePackageIndex() {
         $('#rpt_manage_plans').find('.responsive-pricing-table-package').each(function (index) {
@@ -12,7 +13,7 @@
     }
 
     // Initializing Toggle
-    $(document).find(".shapla-toggle").each(function () {
+    plans_container.find(".shapla-toggle").each(function () {
         if ($(this).attr('data-id') === 'closed') {
             $(this).accordion({
                 collapsible: true,
@@ -34,13 +35,7 @@
 
     // Duplicate Form Fields
     $(document).on('click', '#addNewPackage', function () {
-        var _clone = $(".shapla-toggle").first().clone(false, false);
-
-        _clone.find("textarea, input").val("");
-        _clone.find("input[type='checkbox']").prop('checked', false);
-        _clone.find(".shapla-toggle-title").text('Package');
-
-        _clone.appendTo("#rpt_manage_plans");
+        $("#rpt_manage_plans").append(template);
     });
 
     // Delete plan by clicking delete button

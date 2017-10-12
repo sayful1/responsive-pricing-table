@@ -94,9 +94,6 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			}
 
 			list( $name, $value ) = $this->field_common( $args );
-			// $min = isset( $args['min'] ) ? $args['min'] : null;
-			// $max = isset( $args['max'] ) ? $args['max'] : null;
-
 			echo $this->field_before( $args );
 			echo sprintf( '<input type="number" class="sp-input-text" value="%1$s" id="%2$s" name="%3$s">', $value,
 				$args['id'], $name );

@@ -46,7 +46,7 @@ Do you have questions or issues with Responsive Pricing Table? [Ask for support 
 
 == Changelog ==
 
-= Version 1.2.1 - 2017-10-11 =
+= Version 1.2.1 - 2017-10-12 =
 * Fixed - Fix issue: Post.php edit page categories broken.
 * Tweak - Removed dependency over jquery.livequery.js
 * Tweak - Update admin script.

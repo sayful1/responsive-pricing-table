@@ -122,7 +122,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 			wp_enqueue_style(
 				$this->plugin_name . '-admin',
 				RESPONSIVE_PRICING_TABLE_ASSETS . '/css/admin.css',
-				array( 'wp-color-picker' ),
+				array(),
 				RESPONSIVE_PRICING_TABLE_VERSION,
 				'all'
 			);
@@ -132,7 +132,6 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 				RESPONSIVE_PRICING_TABLE_ASSETS . '/js/admin.js',
 				array(
 					'jquery',
-					'wp-color-picker',
 					'jquery-ui-accordion',
 					'jquery-ui-sortable'
 				),
