@@ -1,15 +1,17 @@
 <?php
-/*
-Plugin Name: 	Responsive Pricing Table
-Plugin URI: 	http://wordpress.org/plugins/responsive-pricing-table/
-Description: 	Dynamic responsive pricing table for WordPress.
-Version: 		1.2.1
-Author: 		Sayful Islam
-Author URI: 	https://sayfulislam.com
-Text Domain: 	responsive-pricing-table
-Domain Path: 	/languages/
-License: 		GPLv2 or later
-*/
+/**!
+ * Plugin Name:         Responsive Pricing Table
+ * Plugin URI:          http://wordpress.org/plugins/responsive-pricing-table/
+ * Description:         Dynamic responsive pricing table for WordPress.
+ * Version:             1.2.1
+ * Author:              Sayful Islam
+ * Author URI:          https://sayfulislam.com
+ * Requires at least:   4.0
+ * Tested up to:        4.8
+ * Text Domain:         responsive-pricing-table
+ * License:             GPLv3
+ * License URI:         https://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {

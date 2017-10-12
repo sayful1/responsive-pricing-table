@@ -2,7 +2,7 @@
 Contributors: sayful
 Tags: plugin, shortcode, pricing table, responsive pricing table, easy pricing table
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3LZWQTHEVYWCY
-Requires at least: 3.5
+Requires at least: 4.0
 Tested up to: 4.8
 Requires PHP: 5.4
 Stable tag: 1.2.1

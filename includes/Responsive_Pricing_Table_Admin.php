@@ -96,7 +96,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			);
 			add_meta_box(
 				"pricing-table-preview",
-				__( "Preview & Usage (Shortcode)", "responsive-pricing-table" ),
+				__( "Preview", "responsive-pricing-table" ),
 				array( $this, 'preview_meta_box' ),
 				"pricing_tables",
 				"normal",
