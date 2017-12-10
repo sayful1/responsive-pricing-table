@@ -59,3 +59,5 @@ class Responsive_Pricing_Table_ShortCode {
 		return apply_filters( 'responsive_pricing_table', $html, $packages );
 	}
 }
+
+Responsive_Pricing_Table_ShortCode::init();

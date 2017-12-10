@@ -1,3 +1,7 @@
 #Folders
 .idea/
 .sass-cache/
+node_modules/
+
+#Files
+package-lock.json

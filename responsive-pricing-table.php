@@ -49,6 +49,8 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'front_scripts' ), 20 );
 
+			add_action( 'elementor/widgets/widgets_registered', array( $this, 'init_widgets' ) );
+
 			$this->includes();
 		}
 
@@ -56,14 +58,13 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 		 * Define constants
 		 */
 		private function define_constants() {
-			$this->define( 'RESPONSIVE_PRICING_TABLE_VERSION', $this->plugin_version );
-			$this->define( 'RESPONSIVE_PRICING_TABLE_FILE', __FILE__ );
-			$this->define( 'RESPONSIVE_PRICING_TABLE_PATH', dirname( RESPONSIVE_PRICING_TABLE_FILE ) );
-			$this->define( 'RESPONSIVE_PRICING_TABLE_INCLUDES', RESPONSIVE_PRICING_TABLE_PATH . '/includes' );
-			$this->define( 'RESPONSIVE_PRICING_TABLE_TEMPLATES', RESPONSIVE_PRICING_TABLE_PATH . '/templates' );
-			$this->define( 'RESPONSIVE_PRICING_TABLE_URL', plugins_url( '', RESPONSIVE_PRICING_TABLE_FILE ) );
-			$this->define( 'RESPONSIVE_PRICING_TABLE_ASSETS', RESPONSIVE_PRICING_TABLE_URL . '/assets' );
-			$this->define( 'RESPONSIVE_PRICING_TABLE_UPLOAD_DIR', 'dcf-attachments' );
+			define( 'RESPONSIVE_PRICING_TABLE_VERSION', $this->plugin_version );
+			define( 'RESPONSIVE_PRICING_TABLE_FILE', __FILE__ );
+			define( 'RESPONSIVE_PRICING_TABLE_PATH', dirname( RESPONSIVE_PRICING_TABLE_FILE ) );
+			define( 'RESPONSIVE_PRICING_TABLE_INCLUDES', RESPONSIVE_PRICING_TABLE_PATH . '/includes' );
+			define( 'RESPONSIVE_PRICING_TABLE_TEMPLATES', RESPONSIVE_PRICING_TABLE_PATH . '/templates' );
+			define( 'RESPONSIVE_PRICING_TABLE_URL', plugins_url( '', RESPONSIVE_PRICING_TABLE_FILE ) );
+			define( 'RESPONSIVE_PRICING_TABLE_ASSETS', RESPONSIVE_PRICING_TABLE_URL . '/assets' );
 		}
 
 		/**
@@ -79,6 +80,13 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 		}
 
 		/**
+		 * Register Widget for Elementor Page builder
+		 */
+		public function init_widgets() {
+			include_once RESPONSIVE_PRICING_TABLE_INCLUDES . '/Responsive_Pricing_Table_Elementor.php';
+		}
+
+		/**
 		 * Load plugin textdomain
 		 */
 		public function load_textdomain() {
@@ -91,28 +99,14 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 			}
 		}
 
-		public function includes() {
-			if ( is_admin() ) {
-				$this->admin_includes();
-			}
-			if ( ! is_admin() ) {
-				$this->frontend_includes();
-			}
-
-			include_once RESPONSIVE_PRICING_TABLE_INCLUDES . '/Responsive_Pricing_Table_Activation.php';
-		}
-
-		public function admin_includes() {
+		/**
+		 * Includes files
+		 */
+		private function includes() {
 			include_once RESPONSIVE_PRICING_TABLE_INCLUDES . '/Responsive_Pricing_Table_Form.php';
 			include_once RESPONSIVE_PRICING_TABLE_INCLUDES . '/Responsive_Pricing_Table_Admin.php';
-
-			new Responsive_Pricing_Table_Admin();
-		}
-
-		public function frontend_includes() {
+			include_once RESPONSIVE_PRICING_TABLE_INCLUDES . '/Responsive_Pricing_Table_Activation.php';
 			include_once RESPONSIVE_PRICING_TABLE_INCLUDES . '/Responsive_Pricing_Table_Shortcode.php';
-
-			Responsive_Pricing_Table_ShortCode::init();
 		}
 
 		public function admin_scripts() {

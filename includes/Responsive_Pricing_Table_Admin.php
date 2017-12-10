@@ -8,6 +8,19 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 
 	class Responsive_Pricing_Table_Admin {
 
+		private static $instance;
+
+		/**
+		 * @return Responsive_Pricing_Table_Admin
+		 */
+		public static function init() {
+			if ( is_null( self::$instance ) ) {
+				self::$instance = new self();
+			}
+
+			return self::$instance;
+		}
+
 		use Responsive_Pricing_Table_Form;
 
 		public function __construct() {
@@ -232,3 +245,5 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 	}
 
 endif;
+
+Responsive_Pricing_Table_Admin::init();
