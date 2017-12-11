@@ -52,7 +52,7 @@ class Responsive_Pricing_Table_ShortCode {
 		}
 
 		ob_start();
-		require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/shortcode.php';
+		require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/public/pricing-table.php';
 		$html = ob_get_contents();
 		ob_end_clean();
 

@@ -121,10 +121,9 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			}
 
 			list( $name, $value ) = $this->field_common( $args );
-			$multiple = isset( $args['multiple'] ) ? 'multiple' : '';
 
 			echo $this->field_before( $args );
-			echo '<select name="' . $name . '" id="' . $args['id'] . '" class="select2 sp-input-text" ' . $multiple . '>';
+			echo '<select name="' . $name . '" id="' . $args['id'] . '" class="sp-input-text">';
 			foreach ( $args['options'] as $key => $option ) {
 				$selected = ( $value == $key ) ? ' selected="selected"' : '';
 				echo '<option value="' . $key . '" ' . $selected . '>' . $option . '</option>';

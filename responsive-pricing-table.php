@@ -103,6 +103,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 		 * Includes files
 		 */
 		private function includes() {
+			include_once RESPONSIVE_PRICING_TABLE_INCLUDES . '/Responsive_Pricing_Table_Currency.php';
 			include_once RESPONSIVE_PRICING_TABLE_INCLUDES . '/Responsive_Pricing_Table_Form.php';
 			include_once RESPONSIVE_PRICING_TABLE_INCLUDES . '/Responsive_Pricing_Table_Admin.php';
 			include_once RESPONSIVE_PRICING_TABLE_INCLUDES . '/Responsive_Pricing_Table_Activation.php';
@@ -129,6 +130,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 				array(
 					'jquery',
 					'jquery-ui-accordion',
+					'jquery-ui-tabs',
 					'jquery-ui-sortable'
 				),
 				RESPONSIVE_PRICING_TABLE_VERSION,

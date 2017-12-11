@@ -22,9 +22,20 @@ gulp.task('scss', function () {
         .pipe(livereload({start: true}));
 });
 
+gulp.task('js-admin', function () {
+    gulp.src('./assets/js/admin/*.js')
+        .pipe(concat('admin.js'))
+        .pipe(gulp.dest('./assets/js'))
+        .pipe(concat('admin.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('./assets/js'))
+        .pipe(livereload({start: true}));
+});
+
 gulp.task('watch', function () {
     livereload.listen();
     gulp.watch('./assets/sass/*.scss', ['scss']);
+    gulp.watch('./assets/js/admin/*.js', ['js-admin']);
 });
 
-gulp.task('default', ['scss', 'watch']);
+gulp.task('default', ['scss', 'js-admin', 'watch']);

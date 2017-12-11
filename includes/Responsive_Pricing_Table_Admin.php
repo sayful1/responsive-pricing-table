@@ -129,7 +129,8 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			$rpt_info = get_post_meta( $post->ID, "responsive_pricing_table", true );
 			$rpt_info = is_array( $rpt_info ) ? $rpt_info : array();
 			ob_start();
-			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/manage_plans.php';
+			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/manage_plans.php';
+			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/pricing-table.php';
 			$html = ob_get_contents();
 			ob_end_clean();
 			echo $html;
@@ -141,7 +142,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			$packages = is_array( $packages ) ? $packages : array();
 			$columns  = count( $packages );
 			ob_start();
-			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/shortcode.php';
+			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/pricing-table.php';
 			$html = ob_get_contents();
 			ob_end_clean();
 			echo $html;
