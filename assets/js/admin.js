@@ -60,7 +60,33 @@
 (function ($) {
     'use strict';
 
-    $('#rpt_manage_plans').find(".shapla-toggle").each(function () {
+    $(document).on('click', '.addPackageFeature', function (e) {
+        e.preventDefault();
+
+        var rpt_feature_wrap = $(this).parent().find('.rpt-feature-wrap');
+
+        console.log(rpt_feature_wrap);
+    });
+
+    var updatePackageIndex = function () {
+        $(document).find('.rpt-package').each(function (index) {
+            var _package = $(this),
+                _features = _package.find('.tab-rpt-features');
+
+            // On Sale
+            _package.find('.on-sale').attr('name', 'responsive_pricing_table[sale][' + index + ']');
+        });
+    };
+
+    $(document).ready(function () {
+        updatePackageIndex();
+    });
+
+})(jQuery);
+(function ($) {
+    'use strict';
+
+    $('body').find(".shapla-toggle").each(function () {
         var _this = $(this);
 
         if (_this.attr('data-id') === 'closed') {

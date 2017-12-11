@@ -41,7 +41,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 				return;
 			}
 
-			require_once RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/package.php';
+			require_once RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/template.php';
 		}
 
 		public function save_post( $post_id ) {

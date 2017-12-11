@@ -1,6 +1,7 @@
-<div data-id="closed" class="responsive-pricing-table-package shapla-toggle shapla-toggle--stroke">
+<div data-id="closed" class="rpt-package responsive-pricing-table-package shapla-toggle shapla-toggle--stroke">
     <span class="shapla-toggle-title">
         <?php esc_html_e( 'Package:', 'responsive-pricing-table' ); ?>
+        <span class="package_title"></span>
     </span>
     <div class="shapla-toggle-inner">
         <div class="shapla-toggle-content">
@@ -64,6 +65,7 @@
 						) );
 						$this->checkbox( array(
 							'id'       => 'sale',
+							'class'    => 'on-sale',
 							'name'     => __( 'Sale', 'responsive-pricing-table' ),
 							'desc'     => __( 'Display the original price with a strikethrough and the new sale price.', 'responsive-pricing-table' ),
 							'multiple' => 'on',
@@ -85,7 +87,46 @@
 						) );
 						?>
                     </div>
-                    <div id="rpt-tab-features" class="shapla-tab tab-rpt-features"></div>
+                    <div id="rpt-tab-features" class="shapla-tab tab-rpt-features">
+                        <div class="rpt-feature-wrap">
+							<?php for ( $i = 1; $i <= 4; $i ++ ): ?>
+                                <div data-id="closed"
+                                     class="responsive-pricing-table-feature shapla-toggle shapla-toggle--stroke">
+                                <span class="shapla-toggle-title">
+                                    <?php echo __( 'List Item', 'responsive-pricing-table' ) . " {$i}"; ?>
+                                </span>
+                                    <div class="shapla-toggle-inner">
+                                        <div class="shapla-toggle-content">
+											<?php
+											$this->text( array(
+												'id'       => 'feature_text',
+												'name'     => __( 'Text', 'responsive-pricing-table' ),
+												'desc'     => __( 'Write feature text.', 'responsive-pricing-table' ),
+												'multiple' => 'on',
+												'std'      => __( 'List Item', 'responsive-pricing-table' ) . " {$i}",
+											) );
+											$this->text( array(
+												'id'       => 'feature_icon',
+												'name'     => __( 'Icon', 'responsive-pricing-table' ),
+												'desc'     => __( 'Choose icon for feature.', 'responsive-pricing-table' ),
+												'multiple' => 'on',
+												'std'      => '',
+											) );
+											$this->color( array(
+												'id'       => 'feature_icon_color',
+												'name'     => __( 'Icon color', 'responsive-pricing-table' ),
+												'desc'     => __( 'Choose icon color.', 'responsive-pricing-table' ),
+												'multiple' => 'on',
+												'std'      => '',
+											) );
+											?>
+                                        </div>
+                                    </div>
+                                </div>
+							<?php endfor; ?>
+                        </div>
+                        <button class="button button-primary addPackageFeature">Add Item</button>
+                    </div>
                     <div id="rpt-tab-footer" class="shapla-tab tab-rpt-footer">
 						<?php
 						$this->text( array(

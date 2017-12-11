@@ -49,7 +49,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'front_scripts' ), 20 );
 
-			add_action( 'elementor/widgets/widgets_registered', array( $this, 'init_widgets' ) );
+			// add_action( 'elementor/widgets/widgets_registered', array( $this, 'init_widgets' ) );
 
 			$this->includes();
 		}
@@ -119,7 +119,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 			wp_enqueue_style(
 				$this->plugin_name . '-admin',
 				RESPONSIVE_PRICING_TABLE_ASSETS . '/css/admin.css',
-				array(),
+				array( 'wp-color-picker' ),
 				RESPONSIVE_PRICING_TABLE_VERSION,
 				'all'
 			);
@@ -131,7 +131,8 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 					'jquery',
 					'jquery-ui-accordion',
 					'jquery-ui-tabs',
-					'jquery-ui-sortable'
+					'jquery-ui-sortable',
+					'wp-color-picker'
 				),
 				RESPONSIVE_PRICING_TABLE_VERSION,
 				true

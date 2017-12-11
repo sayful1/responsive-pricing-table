@@ -1,7 +1,7 @@
 (function ($) {
     'use strict';
 
-    $('#rpt_manage_plans').find(".shapla-toggle").each(function () {
+    $('body').find(".shapla-toggle").each(function () {
         var _this = $(this);
 
         if (_this.attr('data-id') === 'closed') {
