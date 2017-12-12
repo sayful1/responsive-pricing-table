@@ -126,7 +126,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 					'features'         => $_features,
 					// Footer
 					'button_text'      => sanitize_text_field( $button_text[ $i ] ),
-					'button_url'       => esc_url_raw( $button_link[ $i ] ),
+					'button_link'      => esc_url_raw( $button_link[ $i ] ),
 					'additional_info'  => sanitize_text_field( $additional_info[ $i ] ),
 					// Ribbon
 					'show_ribbon'      => $_show_ribbon,
@@ -168,15 +168,11 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 		}
 
 		public function manage_plans( $post ) {
-			$rpt_info = get_post_meta( $post->ID, "responsive_pricing_table", true );
-			$rpt_info = is_array( $rpt_info ) ? $rpt_info : array();
+			$packages = get_post_meta( $post->ID, "_pricing_table_content", true );
+			$packages = is_array( $packages ) ? $packages : array();
 			ob_start();
 			wp_nonce_field( 'pricing_table_box', 'pricing_table_box_nonce' );
-
-//			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/manage_plans.php';
-			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/pricing-table.php';
-			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/pricing-table.php';
-			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/pricing-table.php';
+			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/manage_plans.php';
 			$html = ob_get_contents();
 			ob_end_clean();
 			echo $html;

@@ -99,7 +99,8 @@
                                 </span>
                                     <div class="shapla-toggle-inner">
                                         <div class="shapla-toggle-content">
-                                            <p style="margin-bottom: 10px;"><span class="deleteFeature">Delete this feature</span></p>
+                                            <p style="margin-bottom: 10px;"><span class="deleteFeature">Delete this feature</span>
+                                            </p>
 											<?php
 											$this->text( array(
 												'id'       => 'feature_text',
@@ -162,6 +163,7 @@
 						<?php
 						$this->checkbox( array(
 							'id'       => 'show_ribbon',
+							'class'    => 'show_ribbon',
 							'name'     => __( 'Show Ribbon', 'responsive-pricing-table' ),
 							'desc'     => __( 'Check to add a textual ribbon.', 'responsive-pricing-table' ),
 							'multiple' => 'on',

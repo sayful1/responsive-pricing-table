@@ -82,7 +82,8 @@
 				<?php if ( ! empty( $package['button_text'] ) || ! empty( $package['additional_info'] ) ) : ?>
                     <div class="responsive-pricing-table__footer">
 						<?php if ( ! empty( $package['button_text'] ) ) : ?>
-                            <a class="button responsive-pricing-table-button">
+                            <a class="button responsive-pricing-table-button"
+                               href="<?php echo $package['button_link']; ?>">
 								<?php echo $package['button_text']; ?>
                             </a>
 						<?php endif; ?>
