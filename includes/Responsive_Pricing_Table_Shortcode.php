@@ -44,7 +44,8 @@ class Responsive_Pricing_Table_ShortCode {
 		if ( ! $table_id ) {
 			return '';
 		}
-		$packages = get_post_meta( $table_id, "responsive_pricing_table", true );
+		$currency = Responsive_Pricing_Table_Currency::init();
+		$packages = get_post_meta( $table_id, "_pricing_table_content", true );
 		$packages = is_array( $packages ) ? $packages : array();
 		$columns  = count( $packages );
 		if ( $columns < 1 ) {

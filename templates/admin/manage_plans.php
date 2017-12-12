@@ -1,4 +1,3 @@
-<?php wp_nonce_field( 'pricing_table_box', 'pricing_table_box_nonce' ); ?>
 <p><span id='addNewPackage' class="button button-default"><?php _e( 'Add New Package' ); ?></span></p>
 <div id="rpt_manage_plans">
 	<?php if ( count( $rpt_info ) > 0 ): foreach ( $rpt_info as $rpt ): ?>

@@ -14,10 +14,11 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			}
 
 			list( $name, $value ) = $this->field_common( $args );
+			$class   = isset( $args['class'] ) ? $args['class'] . ' sp-input-text' : 'sp-input-text';
 
 			echo $this->field_before( $args );
-			echo sprintf( '<input type="text" class="sp-input-text" value="%1$s" id="%2$s" name="%3$s">', $value,
-				$args['id'], $name );
+			echo sprintf( '<input type="text" class="%4$s" value="%1$s" id="%2$s" name="%3$s">', $value,
+				$args['id'], $name, $class );
 			echo $this->field_after();
 		}
 
@@ -67,10 +68,11 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 
 			list( $name, $value ) = $this->field_common( $args );
 			$std_value = isset( $args['std'] ) ? $args['std'] : '';
+			$class   = isset( $args['class'] ) ? $args['class'] . ' color-picker' : 'color-picker';
 
 			echo $this->field_before( $args );
-			echo sprintf( '<input type="text" class="colorpicker" value="%1$s" id="%2$s" name="%3$s" data-default-color="%4$s">',
-				$value, $args['id'], $name, $std_value );
+			echo sprintf( '<input type="text" class="%5$s" value="%1$s" id="%2$s" name="%3$s" data-default-color="%4$s">',
+				$value, $args['id'], $name, $std_value, $class );
 			echo $this->field_after();
 		}
 

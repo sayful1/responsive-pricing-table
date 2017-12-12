@@ -9,6 +9,8 @@
             <div class="shapla-section shapla-tabs shapla-tabs--stroke">
                 <div class="shapla-tab-inner">
 
+                    <p><span class="deletePackage">Delete this package</span></p>
+
                     <ul class="shapla-nav shapla-clearfix">
                         <li>
                             <a href="#rpt-tab-header"><?php _e( 'Header', 'carousel-slider' ); ?></a>
@@ -91,15 +93,17 @@
                         <div class="rpt-feature-wrap">
 							<?php for ( $i = 1; $i <= 4; $i ++ ): ?>
                                 <div data-id="closed"
-                                     class="responsive-pricing-table-feature shapla-toggle shapla-toggle--stroke">
+                                     class="rpt-feature shapla-toggle shapla-toggle--stroke">
                                 <span class="shapla-toggle-title">
                                     <?php echo __( 'List Item', 'responsive-pricing-table' ) . " {$i}"; ?>
                                 </span>
                                     <div class="shapla-toggle-inner">
                                         <div class="shapla-toggle-content">
+                                            <p style="margin-bottom: 10px;"><span class="deleteFeature">Delete this feature</span></p>
 											<?php
 											$this->text( array(
 												'id'       => 'feature_text',
+												'class'    => 'feature_text',
 												'name'     => __( 'Text', 'responsive-pricing-table' ),
 												'desc'     => __( 'Write feature text.', 'responsive-pricing-table' ),
 												'multiple' => 'on',
@@ -107,6 +111,7 @@
 											) );
 											$this->text( array(
 												'id'       => 'feature_icon',
+												'class'    => 'feature_icon',
 												'name'     => __( 'Icon', 'responsive-pricing-table' ),
 												'desc'     => __( 'Choose icon for feature.', 'responsive-pricing-table' ),
 												'multiple' => 'on',
@@ -114,6 +119,7 @@
 											) );
 											$this->color( array(
 												'id'       => 'feature_icon_color',
+												'class'    => 'feature_icon_color',
 												'name'     => __( 'Icon color', 'responsive-pricing-table' ),
 												'desc'     => __( 'Choose icon color.', 'responsive-pricing-table' ),
 												'multiple' => 'on',
@@ -181,10 +187,8 @@
 						) );
 						?>
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
 </div>

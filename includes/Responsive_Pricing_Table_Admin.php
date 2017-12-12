@@ -44,6 +44,13 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			require_once RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/template.php';
 		}
 
+		/**
+		 * Save responsive pricing table meta values
+		 *
+		 * @param int $post_id
+		 *
+		 * @return int
+		 */
 		public function save_post( $post_id ) {
 
 			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
@@ -65,35 +72,70 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			if ( 'pricing_tables' !== $_POST['post_type'] ) {
 				return $post_id;
 			}
-			if ( ! current_user_can( 'edit_pages', $post_id ) ) {
+
+			if ( ! current_user_can( 'edit_page', $post_id ) ) {
 				return $post_id;
 			}
 
 			$rpt = isset( $_POST['responsive_pricing_table'] ) ? $_POST['responsive_pricing_table'] : array();
 
-			$package_title = isset( $rpt['package_title'] ) ? $rpt['package_title'] : array();
-			$recurrence    = isset( $rpt['recurrence'] ) ? $rpt['recurrence'] : array();
-			$price         = isset( $rpt['price'] ) ? $rpt['price'] : array();
-			$recommended   = isset( $rpt['recommended'] ) ? $rpt['recommended'] : array();
-			$button_text   = isset( $rpt['button_text'] ) ? $rpt['button_text'] : array();
-			$button_url    = isset( $rpt['button_url'] ) ? $rpt['button_url'] : array();
-			$features_list = isset( $rpt['features_list'] ) ? $rpt['features_list'] : array();
+			$package_title      = isset( $rpt['package_title'] ) ? $rpt['package_title'] : array();
+			$package_subtitle   = isset( $rpt['package_subtitle'] ) ? $rpt['package_subtitle'] : array();
+			$currency_symbol    = isset( $rpt['currency_symbol'] ) ? $rpt['currency_symbol'] : array();
+			$price              = isset( $rpt['price'] ) ? $rpt['price'] : array();
+			$sale               = isset( $rpt['sale'] ) ? $rpt['sale'] : array();
+			$original_price     = isset( $rpt['original_price'] ) ? $rpt['original_price'] : array();
+			$period             = isset( $rpt['period'] ) ? $rpt['period'] : array();
+			$feature_text       = isset( $rpt['feature_text'] ) ? $rpt['feature_text'] : array();
+			$feature_icon       = isset( $rpt['feature_icon'] ) ? $rpt['feature_icon'] : array();
+			$feature_icon_color = isset( $rpt['feature_icon_color'] ) ? $rpt['feature_icon_color'] : array();
+			$button_text        = isset( $rpt['button_text'] ) ? $rpt['button_text'] : array();
+			$button_link        = isset( $rpt['button_link'] ) ? $rpt['button_link'] : array();
+			$additional_info    = isset( $rpt['additional_info'] ) ? $rpt['additional_info'] : array();
+			$show_ribbon        = isset( $rpt['show_ribbon'] ) ? $rpt['show_ribbon'] : array();
+			$ribbon_title       = isset( $rpt['ribbon_title'] ) ? $rpt['ribbon_title'] : array();
+			$ribbon_position    = isset( $rpt['ribbon_position'] ) ? $rpt['ribbon_position'] : array();
 
-			$new_array = array();
+			$_table_content = array();
 
 			for ( $i = 0; $i < count( $package_title ); $i ++ ) {
-				$new_array[] = array(
-					'package_title' => sanitize_text_field( $package_title[ $i ] ),
-					'recurrence'    => sanitize_text_field( $recurrence[ $i ] ),
-					'price'         => sanitize_text_field( $price[ $i ] ),
-					'recommended'   => sanitize_text_field( $recommended[ $i ] ),
-					'button_text'   => sanitize_text_field( $button_text[ $i ] ),
-					'button_url'    => esc_url_raw( $button_url[ $i ] ),
-					'features_list' => wp_kses_data( $features_list[ $i ] ),
+				$_features = array();
+
+				for ( $_i = 0; $_i < count( $feature_text[ $i ] ); $_i ++ ) {
+					$_features[] = array(
+						'text'       => sanitize_text_field( $feature_text[ $i ][ $_i ] ),
+						'icon'       => sanitize_text_field( $feature_icon[ $i ][ $_i ] ),
+						'icon_color' => sanitize_text_field( $feature_icon_color[ $i ][ $_i ] ),
+					);
+				}
+
+				$_sale        = isset( $sale[ $i ] ) && 'on' == $sale[ $i ] ? 'on' : 'off';
+				$_show_ribbon = isset( $show_ribbon[ $i ] ) && 'on' == $show_ribbon[ $i ] ? 'on' : 'off';
+
+				$_table_content[] = array(
+					// Header
+					'package_title'    => sanitize_text_field( $package_title[ $i ] ),
+					'package_subtitle' => sanitize_text_field( $package_subtitle[ $i ] ),
+					// Pricing
+					'currency_symbol'  => sanitize_text_field( $currency_symbol[ $i ] ),
+					'price'            => sanitize_text_field( $price[ $i ] ),
+					'original_price'   => sanitize_text_field( $original_price[ $i ] ),
+					'period'           => sanitize_text_field( $period[ $i ] ),
+					'sale'             => $_sale,
+					// Features
+					'features'         => $_features,
+					// Footer
+					'button_text'      => sanitize_text_field( $button_text[ $i ] ),
+					'button_url'       => esc_url_raw( $button_link[ $i ] ),
+					'additional_info'  => sanitize_text_field( $additional_info[ $i ] ),
+					// Ribbon
+					'show_ribbon'      => $_show_ribbon,
+					'ribbon_title'     => sanitize_text_field( $ribbon_title[ $i ] ),
+					'ribbon_position'  => sanitize_text_field( $ribbon_position[ $i ] ),
 				);
 			}
 
-			update_post_meta( $post_id, "responsive_pricing_table", $new_array );
+			update_post_meta( $post_id, "_pricing_table_content", $_table_content );
 
 			return $post_id;
 		}
@@ -129,7 +171,11 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			$rpt_info = get_post_meta( $post->ID, "responsive_pricing_table", true );
 			$rpt_info = is_array( $rpt_info ) ? $rpt_info : array();
 			ob_start();
-			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/manage_plans.php';
+			wp_nonce_field( 'pricing_table_box', 'pricing_table_box_nonce' );
+
+//			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/manage_plans.php';
+			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/pricing-table.php';
+			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/pricing-table.php';
 			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/pricing-table.php';
 			$html = ob_get_contents();
 			ob_end_clean();
@@ -138,11 +184,12 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 
 		public function preview_meta_box( $post ) {
 			$table_id = $post->ID;
-			$packages = get_post_meta( $table_id, "responsive_pricing_table", true );
+			$currency = Responsive_Pricing_Table_Currency::init();
+			$packages = get_post_meta( $table_id, "_pricing_table_content", true );
 			$packages = is_array( $packages ) ? $packages : array();
 			$columns  = count( $packages );
 			ob_start();
-			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/pricing-table.php';
+			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/public/pricing-table.php';
 			$html = ob_get_contents();
 			ob_end_clean();
 			echo $html;

@@ -1,7 +1,7 @@
 (function ($) {
     'use strict';
 
-    $('body').find(".shapla-toggle").each(function () {
+    $(document).find(".shapla-toggle").each(function () {
         var _this = $(this);
 
         if (_this.attr('data-id') === 'closed') {
@@ -31,7 +31,7 @@
     });
 
     // Initializing WP Color Picker
-    $('.colorpicker').each(function () {
+    $(document).find('.color-picker').each(function () {
         $(this).wpColorPicker();
     });
 

@@ -2,6 +2,19 @@
 
 class Responsive_Pricing_Table_Currency {
 
+	private static $instance;
+
+	/**
+	 * @return Responsive_Pricing_Table_Currency
+	 */
+	public static function init() {
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
 	public static function currency_list() {
 		return [
 			''             => __( 'None', 'responsive-pricing-table' ),
