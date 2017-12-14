@@ -68,6 +68,21 @@
     }
 }
 
+.sp-input-spacing {
+    .dashicons {
+        height: 35px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.spacing-text {
+    width: 60px;
+    padding: 8px;
+    height: 35px !important;
+}
+
 @media only screen and (min-width: 600px) {
     .sp {
         &-input-label {

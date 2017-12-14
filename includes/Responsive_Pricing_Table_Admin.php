@@ -96,6 +96,12 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			$ribbon_title       = isset( $rpt['ribbon_title'] ) ? $rpt['ribbon_title'] : array();
 			$ribbon_position    = isset( $rpt['ribbon_position'] ) ? $rpt['ribbon_position'] : array();
 
+			$header_background_color   = isset( $rpt['header_background_color'] ) ? $rpt['header_background_color'] : array();
+			$header_title_color        = isset( $rpt['header_title_color'] ) ? $rpt['header_title_color'] : array();
+			$header_title_font_size    = isset( $rpt['header_title_font_size'] ) ? $rpt['header_title_font_size'] : array();
+			$header_subtitle_color     = isset( $rpt['header_subtitle_color'] ) ? $rpt['header_subtitle_color'] : array();
+			$header_subtitle_font_size = isset( $rpt['header_subtitle_font_size'] ) ? $rpt['header_subtitle_font_size'] : array();
+
 			$_table_content = array();
 
 			for ( $i = 0; $i < count( $package_title ); $i ++ ) {
@@ -105,7 +111,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 					$_features[] = array(
 						'text'       => sanitize_text_field( $feature_text[ $i ][ $_i ] ),
 						'icon'       => sanitize_text_field( $feature_icon[ $i ][ $_i ] ),
-						'icon_color' => sanitize_text_field( $feature_icon_color[ $i ][ $_i ] ),
+						'icon_color' => $this->sanitize_color( $feature_icon_color[ $i ][ $_i ] ),
 					);
 				}
 
@@ -114,24 +120,30 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 
 				$_table_content[] = array(
 					// Header
-					'package_title'    => sanitize_text_field( $package_title[ $i ] ),
-					'package_subtitle' => sanitize_text_field( $package_subtitle[ $i ] ),
+					'package_title'             => sanitize_text_field( $package_title[ $i ] ),
+					'package_subtitle'          => sanitize_text_field( $package_subtitle[ $i ] ),
 					// Pricing
-					'currency_symbol'  => sanitize_text_field( $currency_symbol[ $i ] ),
-					'price'            => sanitize_text_field( $price[ $i ] ),
-					'original_price'   => sanitize_text_field( $original_price[ $i ] ),
-					'period'           => sanitize_text_field( $period[ $i ] ),
-					'sale'             => $_sale,
+					'currency_symbol'           => sanitize_text_field( $currency_symbol[ $i ] ),
+					'price'                     => sanitize_text_field( $price[ $i ] ),
+					'original_price'            => sanitize_text_field( $original_price[ $i ] ),
+					'period'                    => sanitize_text_field( $period[ $i ] ),
+					'sale'                      => $_sale,
 					// Features
-					'features'         => $_features,
+					'features'                  => $_features,
 					// Footer
-					'button_text'      => sanitize_text_field( $button_text[ $i ] ),
-					'button_link'      => esc_url_raw( $button_link[ $i ] ),
-					'additional_info'  => sanitize_text_field( $additional_info[ $i ] ),
+					'button_text'               => sanitize_text_field( $button_text[ $i ] ),
+					'button_link'               => esc_url_raw( $button_link[ $i ] ),
+					'additional_info'           => sanitize_text_field( $additional_info[ $i ] ),
 					// Ribbon
-					'show_ribbon'      => $_show_ribbon,
-					'ribbon_title'     => sanitize_text_field( $ribbon_title[ $i ] ),
-					'ribbon_position'  => sanitize_text_field( $ribbon_position[ $i ] ),
+					'show_ribbon'               => $_show_ribbon,
+					'ribbon_title'              => sanitize_text_field( $ribbon_title[ $i ] ),
+					'ribbon_position'           => sanitize_text_field( $ribbon_position[ $i ] ),
+					// Style
+					'header_background_color'   => $this->sanitize_color( $header_background_color[ $i ] ),
+					'header_title_color'        => $this->sanitize_color( $header_title_color[ $i ] ),
+					'header_title_font_size'    => sanitize_text_field( $header_title_font_size[ $i ] ),
+					'header_subtitle_color'     => $this->sanitize_color( $header_subtitle_color[ $i ] ),
+					'header_subtitle_font_size' => sanitize_text_field( $header_subtitle_font_size[ $i ] ),
 				);
 			}
 
@@ -238,7 +250,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 				'show_in_nav_menus'   => true,
 				'show_in_admin_bar'   => true,
 				'menu_position'       => 5,
-				'menu_icon'           => 'dashicons-editor-table',
+				'menu_icon'           => 'data:image/svg+xml;base64,' . base64_encode( '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32"><path fill="black" d="M30.656 5.984h-5.984v-1.984c0-0.384-0.288-0.672-0.672-0.672h-16c-0.352 0-0.672 0.288-0.672 0.672v1.984h-5.984c-0.384 0-0.672 0.32-0.672 0.672v18.688c0 0.352 0.288 0.64 0.672 0.64h5.984v2.016c0 0.384 0.32 0.672 0.672 0.672h16c0.384 0 0.672-0.288 0.672-0.672v-2.016h5.984c0.384 0 0.672-0.288 0.672-0.64v-18.688c0-0.352-0.288-0.672-0.672-0.672zM30.016 7.328v2.656h-5.344v-2.656h5.344zM8.672 4.672h14.656v4h-14.656v-4zM7.328 7.328v2.656h-5.312v-2.656h5.312zM2.016 24.672v-13.344h5.312v13.344h-5.312zM23.328 27.328h-14.656v-17.344h14.656v17.344zM24.672 24.672v-13.344h5.344v13.344h-5.344zM16.672 18.144v-2.72c0.736 0.16 1.28 0.64 1.344 1.184 0.032 0.352 0.352 0.608 0.704 0.608 0.384-0.032 0.64-0.384 0.608-0.736-0.096-1.248-1.216-2.208-2.656-2.432v-0.704c0-0.384-0.288-0.672-0.672-0.672s-0.672 0.288-0.672 0.672v0.704c-1.504 0.256-2.656 1.344-2.656 2.624 0 1.248 0.864 2.080 2.656 2.528v2.72c-0.736-0.192-1.28-0.64-1.344-1.184 0-0.352-0.384-0.64-0.704-0.608-0.352 0.032-0.64 0.352-0.608 0.736 0.096 1.216 1.216 2.176 2.656 2.4v0.736c0 0.352 0.32 0.672 0.672 0.672s0.672-0.32 0.672-0.672v-0.736c1.504-0.224 2.656-1.312 2.656-2.592 0-1.248-0.864-2.112-2.656-2.528zM14.016 16.672c0-0.576 0.544-1.056 1.312-1.248v2.4c-0.896-0.256-1.312-0.64-1.312-1.152zM16.672 21.92v-2.4c0.896 0.256 1.344 0.608 1.344 1.152s-0.576 1.056-1.344 1.248z"/></svg>' ),
 				'can_export'          => true,
 				'has_archive'         => false,
 				'exclude_from_search' => true,
@@ -285,6 +297,54 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			unset( $actions['inline hide-if-no-js'] );
 
 			return $actions;
+		}
+
+		/**
+		 * Sanitizes a Hex, RGB or RGBA color
+		 *
+		 * @param $color
+		 *
+		 * @return mixed|string
+		 */
+		private function sanitize_color( $color ) {
+			if ( '' === $color ) {
+				return '';
+			}
+
+			// Trim unneeded whitespace
+			$color = str_replace( ' ', '', $color );
+
+			// If this is hex color, validate and return it
+			if ( 1 === preg_match( '|^#([A-Fa-f0-9]{3}){1,2}$|', $color ) ) {
+				return $color;
+			}
+
+			// If this is rgb, validate and return it
+			if ( 'rgb(' === substr( $color, 0, 4 ) ) {
+				list( $red, $green, $blue ) = sscanf( $color, 'rgb(%d,%d,%d)' );
+
+				if ( ( $red >= 0 && $red <= 255 ) &&
+				     ( $green >= 0 && $green <= 255 ) &&
+				     ( $blue >= 0 && $blue <= 255 )
+				) {
+					return "rgb({$red},{$green},{$blue})";
+				}
+			}
+
+			// If this is rgba, validate and return it
+			if ( 'rgba(' === substr( $color, 0, 5 ) ) {
+				list( $red, $green, $blue, $alpha ) = sscanf( $color, 'rgba(%d,%d,%d,%f)' );
+
+				if ( ( $red >= 0 && $red <= 255 ) &&
+				     ( $green >= 0 && $green <= 255 ) &&
+				     ( $blue >= 0 && $blue <= 255 ) &&
+				     $alpha >= 0 && $alpha <= 1
+				) {
+					return "rgba({$red},{$green},{$blue},{$alpha})";
+				}
+			}
+
+			return '';
 		}
 	}
 

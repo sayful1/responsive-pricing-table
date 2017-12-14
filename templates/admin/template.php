@@ -10,7 +10,7 @@
                 <div class="shapla-section shapla-tabs shapla-tabs--stroke">
                     <div class="shapla-tab-inner">
 
-                        <p><span class="deletePackage">Delete this package</span></p>
+                        <p><span class="deletePackage">Delete</span></p>
 
                         <ul class="shapla-nav shapla-clearfix">
                             <li>
@@ -27,6 +27,9 @@
                             </li>
                             <li>
                                 <a href="#rpt-tab-ribbon"><?php _e( 'Ribbon', 'carousel-slider' ); ?></a>
+                            </li>
+                            <li>
+                                <a href="#rpt-tab-style"><?php _e( 'Style', 'carousel-slider' ); ?></a>
                             </li>
                         </ul>
 
@@ -189,6 +192,9 @@
 								)
 							) );
 							?>
+                        </div>
+                        <div id="rpt-tab-style" class="shapla-tab tab-rpt-style">
+
                         </div>
                     </div>
                 </div>

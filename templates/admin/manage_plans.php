@@ -31,6 +31,9 @@
                                 <li>
                                     <a href="#rpt-tab-ribbon"><?php _e( 'Ribbon', 'carousel-slider' ); ?></a>
                                 </li>
+                                <li>
+                                    <a href="#rpt-tab-style"><?php _e( 'Style', 'carousel-slider' ); ?></a>
+                                </li>
                             </ul>
 
                             <div id="rpt-tab-header" class="shapla-tab tab-rpt-header">
@@ -193,6 +196,110 @@
 								) );
 								?>
                             </div>
+
+                            <div id="rpt-tab-style" class="shapla-tab tab-rpt-style">
+                                <div class="rpt-style-wrap">
+
+                                    <div data-id="closed" class="shapla-toggle shapla-toggle--stroke">
+                                        <span class="shapla-toggle-title"><?php _e( 'Header', 'responsive-pricing-table' ); ?></span>
+                                        <div class="shapla-toggle-inner">
+                                            <div class="shapla-toggle-content">
+												<?php
+												$this->color( array(
+													'id'       => 'header_background_color',
+													'class'    => 'header_background_color',
+													'name'     => __( 'Background Color', 'responsive-pricing-table' ),
+													'desc'     => __( 'Choose header background color.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => '#555555',
+													'std'      => empty( $package['header_background_color'] ) ?: $package['header_background_color'],
+												) );
+												$this->spacing( array(
+													'id'       => 'header_background_padding',
+													'class'    => 'header_background_padding',
+													'name'     => __( 'Background Padding', 'responsive-pricing-table' ),
+													'desc'     => __( 'Write header background padding.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => array(
+														'top'    => '20px',
+														'wright' => '0',
+														'bottom' => '20px',
+														'left'   => '0',
+													),
+													'std'      => empty( $package['header_background_padding'] ) ?: $package['header_background_padding'],
+												) );
+												$this->color( array(
+													'id'       => 'header_title_color',
+													'class'    => 'header_title_color',
+													'name'     => __( 'Title Color', 'responsive-pricing-table' ),
+													'desc'     => __( 'Choose header title color.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => '#ffffff',
+													'std'      => empty( $package['header_title_color'] ) ?: $package['header_title_color'],
+												) );
+												$this->text( array(
+													'id'       => 'header_title_font_size',
+													'class'    => 'header_title_font_size',
+													'name'     => __( 'Title Font Size', 'responsive-pricing-table' ),
+													'desc'     => __( 'Choose header title font size.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => '24px',
+													'std'      => empty( $package['header_title_font_size'] ) ?: $package['header_title_font_size'],
+												) );
+												$this->color( array(
+													'id'       => 'header_subtitle_color',
+													'class'    => 'header_subtitle_color',
+													'name'     => __( 'Subtitle Color', 'responsive-pricing-table' ),
+													'desc'     => __( 'Choose header subtitle color.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => '#ffffff',
+													'std'      => empty( $package['header_title_color'] ) ?: $package['header_title_color'],
+												) );
+												$this->text( array(
+													'id'       => 'header_subtitle_font_size',
+													'class'    => 'header_subtitle_font_size',
+													'name'     => __( 'Subtitle Font Size', 'responsive-pricing-table' ),
+													'desc'     => __( 'Choose header subtitle font size.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => '13px',
+													'std'      => empty( $package['header_subtitle_font_size'] ) ?: $package['header_subtitle_font_size'],
+												) );
+												?>
+                                            </div>
+                                        </div>
+                                    </div><!-- Header -->
+                                    <div data-id="closed" class="shapla-toggle shapla-toggle--stroke">
+                                        <span class="shapla-toggle-title"><?php _e( 'Pricing', 'responsive-pricing-table' ); ?></span>
+                                        <div class="shapla-toggle-inner">
+                                            <div class="shapla-toggle-content">
+                                            </div>
+                                        </div>
+                                    </div><!-- Pricing -->
+                                    <div data-id="closed" class="shapla-toggle shapla-toggle--stroke">
+                                        <span class="shapla-toggle-title"><?php _e( 'Features', 'responsive-pricing-table' ); ?></span>
+                                        <div class="shapla-toggle-inner">
+                                            <div class="shapla-toggle-content">
+                                            </div>
+                                        </div>
+                                    </div><!-- Features -->
+                                    <div data-id="closed" class="shapla-toggle shapla-toggle--stroke">
+                                        <span class="shapla-toggle-title"><?php _e( 'Footer', 'responsive-pricing-table' ); ?></span>
+                                        <div class="shapla-toggle-inner">
+                                            <div class="shapla-toggle-content">
+                                            </div>
+                                        </div>
+                                    </div><!-- Footer -->
+                                    <div data-id="closed" class="shapla-toggle shapla-toggle--stroke">
+                                        <span class="shapla-toggle-title"><?php _e( 'Ribbon', 'responsive-pricing-table' ); ?></span>
+                                        <div class="shapla-toggle-inner">
+                                            <div class="shapla-toggle-content">
+                                            </div>
+                                        </div>
+                                    </div><!-- Ribbon -->
+
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -14,11 +14,59 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			}
 
 			list( $name, $value ) = $this->field_common( $args );
-			$class   = isset( $args['class'] ) ? $args['class'] . ' sp-input-text' : 'sp-input-text';
+			$class = isset( $args['class'] ) ? $args['class'] . ' sp-input-text' : 'sp-input-text';
 
 			echo $this->field_before( $args );
 			echo sprintf( '<input type="text" class="%4$s" value="%1$s" id="%2$s" name="%3$s">', $value,
 				$args['id'], $name, $class );
+			echo $this->field_after();
+		}
+
+		public function spacing( array $args ) {
+			if ( ! isset( $args['id'], $args['name'] ) ) {
+				return;
+			}
+
+			global $post;
+			// Meta Name
+			$group    = isset( $args['group'] ) ? $args['group'] : 'responsive_pricing_table';
+			$multiple = isset( $args['multiple'] ) ? '[]' : '';
+			$name     = sprintf( '%s[%s]%s', $group, $args['id'], $multiple );
+
+			// Meta Value
+			$std_value = isset( $args['std'] ) ? $args['std'] : null;
+			$meta      = get_post_meta( $post->ID, $args['id'], true );
+			$value     = ! empty( $meta ) ? $meta : $std_value;
+
+			$_top    = isset( $value['top'] ) ? $value['top'] : null;
+			$_right  = isset( $value['right'] ) ? $value['right'] : null;
+			$_bottom = isset( $value['bottom'] ) ? $value['bottom'] : null;
+			$_left   = isset( $value['left'] ) ? $value['left'] : null;
+
+			$class = isset( $args['class'] ) ? $args['class'] . ' spacing-text' : 'spacing-text';
+
+			echo $this->field_before( $args );
+
+			?>
+            <div class="sp-input-spacing">
+                <span class="dashicons dashicons-arrow-up-alt"></span>
+                <input type="text" name="<?php echo $name; ?>[top]" class="spacing-text" placeholder="Top"
+                       value="<?php echo $_top; ?>">
+
+                <span class="dashicons dashicons-arrow-right-alt"></span>
+                <input type="text" name="<?php echo $name; ?>[right]" class="spacing-text" placeholder="Right"
+                       value="<?php echo $_right; ?>">
+
+                <span class="dashicons dashicons-arrow-down-alt"></span>
+                <input type="text" name="<?php echo $name; ?>[bottom]" class="spacing-text" placeholder="Bottom"
+                       value="<?php echo $_bottom; ?>">
+
+                <span class="dashicons dashicons-arrow-left-alt"></span>
+                <input type="text" name="<?php echo $name; ?>[left]" class="spacing-text" placeholder="Left"
+                       value="<?php echo $_left; ?>">
+            </div>
+			<?php
+
 			echo $this->field_after();
 		}
 
@@ -68,11 +116,12 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 
 			list( $name, $value ) = $this->field_common( $args );
 			$std_value = isset( $args['std'] ) ? $args['std'] : '';
-			$class   = isset( $args['class'] ) ? $args['class'] . ' color-picker' : 'color-picker';
+			$default   = isset( $args['default'] ) ? $args['default'] : $std_value;
+			$class     = isset( $args['class'] ) ? $args['class'] . ' color-picker' : 'color-picker';
 
 			echo $this->field_before( $args );
 			echo sprintf( '<input type="text" class="%5$s" value="%1$s" id="%2$s" name="%3$s" data-default-color="%4$s">',
-				$value, $args['id'], $name, $std_value, $class );
+				$value, $args['id'], $name, $default, $class );
 			echo $this->field_after();
 		}
 
@@ -142,7 +191,7 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			$name     = sprintf( '%s[%s]%s', $group, $args['id'], $multiple );
 
 			// Meta Value
-			$std_value = isset( $args['std'] ) ? $args['std'] : '';
+			$std_value = isset( $args['std'] ) ? $args['std'] : null;
 			$meta      = get_post_meta( $post->ID, $args['id'], true );
 			$value     = ! empty( $meta ) ? $meta : $std_value;
 
