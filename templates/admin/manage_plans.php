@@ -272,6 +272,40 @@
                                         <span class="shapla-toggle-title"><?php _e( 'Pricing', 'responsive-pricing-table' ); ?></span>
                                         <div class="shapla-toggle-inner">
                                             <div class="shapla-toggle-content">
+												<?php
+												$this->color( array(
+													'id'       => 'pricing_background_color',
+													'class'    => 'pricing_background_color',
+													'name'     => __( 'Background Color', 'responsive-pricing-table' ),
+													'desc'     => __( 'Choose pricing background color.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => '#f5f5f5',
+													'std'      => empty( $package['pricing_background_color'] ) ?: $package['pricing_background_color'],
+												) );
+												$this->color( array(
+													'id'       => 'pricing_text_color',
+													'class'    => 'pricing_text_color',
+													'name'     => __( 'Text Color', 'responsive-pricing-table' ),
+													'desc'     => __( 'Choose pricing text color.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => '#555555',
+													'std'      => empty( $package['pricing_text_color'] ) ?: $package['pricing_text_color'],
+												) );
+												$this->spacing( array(
+													'id'       => 'pricing_padding',
+													'class'    => 'pricing_padding',
+													'name'     => __( 'Pricing Padding', 'responsive-pricing-table' ),
+													'desc'     => __( 'Write pricing padding.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => array(
+														'top'    => '20px',
+														'wright' => '0',
+														'bottom' => '20px',
+														'left'   => '0',
+													),
+													'std'      => empty( $package['pricing_padding'] ) ?: $package['pricing_padding'],
+												) );
+												?>
                                             </div>
                                         </div>
                                     </div><!-- Pricing -->
