@@ -305,6 +305,51 @@
 													),
 													'std'      => empty( $package['pricing_padding'] ) ?: $package['pricing_padding'],
 												) );
+												$this->text( array(
+													'id'       => 'currency_size',
+													'class'    => 'currency_size',
+													'name'     => __( 'Currency Symbol Size', 'responsive-pricing-table' ),
+													'desc'     => __( 'Choose currency symbol size.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => '20px',
+													'std'      => empty( $package['currency_size'] ) ? '20px' : $package['currency_size'],
+												) );
+												$this->vertical_position( array(
+													'id'       => 'currency_vertical_position',
+													'class'    => 'currency_vertical_position',
+													'name'     => __( 'Currency Vertical Position', 'responsive-pricing-table' ),
+													'desc'     => __( 'Choose currency symbol vertical position.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => 'top',
+													'std'      => empty( $package['currency_vertical_position'] ) ?: $package['currency_vertical_position'],
+												) );
+												$this->text( array(
+													'id'       => 'fractional_size',
+													'class'    => 'fractional_size',
+													'name'     => __( 'Fractional Part Size', 'responsive-pricing-table' ),
+													'desc'     => __( 'Choose fractional part size.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => '20px',
+													'std'      => empty( $package['fractional_size'] ) ? '20px' : $package['fractional_size'],
+												) );
+												$this->vertical_position( array(
+													'id'       => 'fractional_vertical_position',
+													'class'    => 'fractional_vertical_position',
+													'name'     => __( 'Fractional Part Vertical Position', 'responsive-pricing-table' ),
+													'desc'     => __( 'Choose fractional part vertical position.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => 'top',
+													'std'      => empty( $package['fractional_vertical_position'] ) ?: $package['fractional_vertical_position'],
+												) );
+												$this->color( array(
+													'id'       => 'period_text_color',
+													'class'    => 'period_text_color',
+													'name'     => __( 'Period Color', 'responsive-pricing-table' ),
+													'desc'     => __( 'Choose period text color.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => '#555555',
+													'std'      => empty( $package['pricing_text_color'] ) ?: $package['pricing_text_color'],
+												) );
 												?>
                                             </div>
                                         </div>
@@ -327,6 +372,35 @@
                                         <span class="shapla-toggle-title"><?php _e( 'Ribbon', 'responsive-pricing-table' ); ?></span>
                                         <div class="shapla-toggle-inner">
                                             <div class="shapla-toggle-content">
+												<?php
+												$this->color( array(
+													'id'       => 'ribbon_background_color',
+													'class'    => 'ribbon_background_color',
+													'name'     => __( 'Ribbon Background Color', 'responsive-pricing-table' ),
+													'desc'     => __( 'Choose ribbon background color.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => '#000000',
+													'std'      => empty( $package['ribbon_background_color'] ) ? '#000000' : $package['ribbon_background_color'],
+												) );
+												$this->color( array(
+													'id'       => 'ribbon_text_color',
+													'class'    => 'ribbon_text_color',
+													'name'     => __( 'Ribbon Text Color', 'responsive-pricing-table' ),
+													'desc'     => __( 'Choose ribbon text color.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => '#ffffff',
+													'std'      => empty( $package['ribbon_text_color'] ) ? '#ffffff' : $package['ribbon_text_color'],
+												) );
+												$this->text( array(
+													'id'       => 'ribbon_distance',
+													'class'    => 'ribbon_distance',
+													'name'     => __( 'Ribbon Distance', 'responsive-pricing-table' ),
+													'desc'     => __( 'Choose ribbon distance.', 'responsive-pricing-table' ),
+													'multiple' => 'on',
+													'default'  => '30px',
+													'std'      => empty( $package['ribbon_distance'] ) ? '30px' : $package['ribbon_distance'],
+												) );
+												?>
                                             </div>
                                         </div>
                                     </div><!-- Ribbon -->

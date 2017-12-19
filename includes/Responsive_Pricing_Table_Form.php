@@ -22,6 +22,54 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			echo $this->field_after();
 		}
 
+		public function vertical_position( array $args ) {
+			if ( ! isset( $args['id'], $args['name'] ) ) {
+				return;
+			}
+
+			list( $name, $value ) = $this->field_common( $args );
+			$class = isset( $args['class'] ) ? $args['class'] . ' spacing-text' : 'spacing-text';
+
+			echo $this->field_before( $args );
+
+			?>
+            <div class="sp-input-position">
+
+                <label title="Top" class="position-label">
+                    <input type="radio" name="<?php echo $name; ?>" value="top" <?php checked( 'top', $value ); ?>>
+                    <span class="v-align-top position-icon">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                             viewBox="0 0 32 32">
+                            <path d="M11.008 14.816c-0.224 0.288-0.128 0.512 0.224 0.512h2.624v12c0 0.384 0.32 0.672 0.672 0.672h2.624c0.352 0 0.64-0.288 0.64-0.672v-12h2.624c0.384 0 0.48-0.224 0.224-0.512l-4.352-4.992c-0.256-0.256-0.64-0.256-0.896 0l-4.384 4.992zM5.984 4c-0.352 0-0.64 0.288-0.64 0.672v2.656c0 0.384 0.288 0.672 0.64 0.672h19.712c0.352 0 0.64-0.288 0.64-0.672v-2.656c0-0.384-0.288-0.672-0.64-0.672h-19.712z"></path>
+                        </svg>
+                    </span>
+                </label>
+                <label title="Middle" class="position-label">
+                    <input type="radio" name="<?php echo $name; ?>"
+                           value="middle" <?php checked( 'middle', $value ); ?>>
+                    <span class="v-align-middle position-icon">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                             viewBox="0 0 32 32">
+                            <path d="M10.976 23.040c-0.256 0.224-0.16 0.384 0.192 0.384h2.688v3.84c0 0.32 0.288 0.544 0.64 0.544h2.688c0.352 0 0.64-0.256 0.64-0.544v-3.84h2.656c0.384 0 0.448-0.16 0.192-0.384l-4.352-3.616c-0.288-0.192-0.704-0.192-0.96 0l-4.384 3.616zM10.976 8.96c-0.256-0.224-0.16-0.384 0.192-0.384h2.688v-3.84c0-0.32 0.288-0.544 0.64-0.544h2.688c0.352 0 0.64 0.256 0.64 0.544v3.84h2.656c0.384 0 0.448 0.16 0.192 0.384l-4.352 3.584c-0.288 0.224-0.704 0.224-0.96 0l-4.384-3.584zM25.504 17.952c0.352 0 0.672-0.288 0.672-0.64v-2.624c0-0.352-0.32-0.672-0.672-0.672h-20c-0.384 0-0.672 0.32-0.672 0.672v2.624c0 0.352 0.32 0.64 0.672 0.64h20z"></path>
+                        </svg>
+                    </span>
+                </label>
+                <label title="Bottom" class="position-label">
+                    <input type="radio" name="<?php echo $name; ?>"
+                           value="bottom" <?php checked( 'bottom', $value ); ?>>
+                    <span class="v-align-bottom position-icon">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                             viewBox="0 0 32 32">
+                            <path d="M20.64 17.152c0.256-0.256 0.16-0.48-0.224-0.48h-2.624v-12c0-0.384-0.288-0.672-0.64-0.672h-2.624c-0.384 0-0.672 0.288-0.672 0.672v12h-2.624c-0.352 0-0.448 0.224-0.224 0.48l4.384 5.024c0.256 0.256 0.64 0.256 0.896 0l4.352-5.024zM25.696 28c0.352 0 0.64-0.288 0.64-0.672v-2.656c0-0.384-0.288-0.672-0.64-0.672h-19.712c-0.352 0-0.64 0.288-0.64 0.672v2.656c0 0.384 0.288 0.672 0.64 0.672h19.712z"></path>
+                        </svg>
+                    </span>
+                </label>
+            </div>
+			<?php
+
+			echo $this->field_after();
+		}
+
 		public function spacing( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
