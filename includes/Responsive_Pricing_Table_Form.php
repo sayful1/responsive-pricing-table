@@ -1,13 +1,15 @@
 <?php
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
 
-if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
+// If this file is called directly, abort.
+defined( 'ABSPATH' ) || die;
+
+if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ) {
 
 	trait Responsive_Pricing_Table_Form {
 
+		/**
+		 * @param array $args
+		 */
 		public function text( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -21,6 +23,9 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * @param array $args
+		 */
 		public function textarea( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -36,6 +41,9 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * @param array $args
+		 */
 		public function editor( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -60,6 +68,9 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * @param array $args
+		 */
 		public function color( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -74,6 +85,9 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * @param array $args
+		 */
 		public function date( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -88,6 +102,9 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * @param array $args
+		 */
 		public function number( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -100,6 +117,9 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * @param array $args
+		 */
 		public function checkbox( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -115,7 +135,10 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			echo $this->field_after();
 		}
 
-		public function select( $args ) {
+		/**
+		 * @param array $args
+		 */
+		public function select( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
 			}
@@ -133,7 +156,12 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			echo $this->field_after();
 		}
 
-		private function field_common( $args ) {
+		/**
+		 * @param array $args
+		 *
+		 * @return array
+		 */
+		private function field_common( array $args ) {
 			global $post;
 			// Meta Name
 			$group    = isset( $args['group'] ) ? $args['group'] : 'responsive_pricing_table';
@@ -152,7 +180,12 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			return array( $name, $value );
 		}
 
-		private function field_before( $args ) {
+		/**
+		 * @param array $args
+		 *
+		 * @return string
+		 */
+		private function field_before( array $args ) {
 			$table = sprintf( '<div class="sp-input-group" id="field-%s">', $args['id'] );
 			$table .= sprintf( '<div class="sp-input-label">' );
 			$table .= sprintf( '<label for="%1$s">%2$s</label>', $args['id'], $args['name'] );
@@ -171,9 +204,11 @@ if ( ! trait_exists( 'Responsive_Pricing_Table_Form' ) ):
 			return $table;
 		}
 
+		/**
+		 * @return string
+		 */
 		private function field_after() {
 			return '</div></div>';
 		}
 	}
-
-endif;
+}

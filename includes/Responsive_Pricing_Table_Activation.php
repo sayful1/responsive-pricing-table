@@ -1,30 +1,37 @@
 <?php
 
+// If this file is called directly, abort.
+defined( 'ABSPATH' ) || die;
+
 if ( ! class_exists( 'Responsive_Pricing_Table_Activation' ) ) {
 
 	class Responsive_Pricing_Table_Activation {
 
+		/**
+		 * The instance of the class
+		 *
+		 * @var self
+		 */
 		private static $instance;
 
 		/**
-		 * @return Responsive_Pricing_Table_Activation
+		 * Ensures only one instance of the class is loaded or can be loaded.
+		 *
+		 * @return self
 		 */
 		public static function init() {
 			if ( is_null( self::$instance ) ) {
 				self::$instance = new self();
+				add_action( 'responsive_pricing_table_activation', [ self::$instance, 'add_version_number' ] );
+				add_action( 'responsive_pricing_table_activation', [ self::$instance, 'upgrade_to_120' ] );
 			}
 
 			return self::$instance;
 		}
 
 		/**
-		 * Responsive_Pricing_Table_Activation constructor.
+		 * Add plugin version number
 		 */
-		public function __construct() {
-			add_action( 'responsive_pricing_table_activation', array( $this, 'add_version_number' ) );
-			add_action( 'responsive_pricing_table_activation', array( $this, 'upgrade_to_120' ) );
-		}
-
 		public function add_version_number() {
 			update_option(
 				'responsive_pricing_table_version',
@@ -37,7 +44,6 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Activation' ) ) {
 		 * Update meta box when upgrading to version 1.2.0
 		 */
 		public function upgrade_to_120() {
-
 			$pricing_tables = get_posts( array(
 				'post_type' => 'pricing_tables',
 				'meta_key'  => 'responsive_pricing_table'
@@ -51,13 +57,15 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Activation' ) ) {
 				'post_type' => 'pricing_tables',
 				'meta_key'  => '_table_packages'
 			) );
+
 			foreach ( $pricing_tables as $post ) {
 				update_post_meta( $post->ID, "responsive_pricing_table", $this->package_data( $post->ID ) );
 			}
-
 		}
 
 		/**
+		 * Get package data
+		 *
 		 * @param $table_id
 		 *
 		 * @return array|mixed|object

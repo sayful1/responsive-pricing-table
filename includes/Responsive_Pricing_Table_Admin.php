@@ -1,40 +1,49 @@
 <?php
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
 
-if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
+// If this file is called directly, abort.
+defined( 'ABSPATH' ) || die;
+
+if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ) {
 
 	class Responsive_Pricing_Table_Admin {
 
+		use Responsive_Pricing_Table_Form;
+
+		/**
+		 * The instance of the class
+		 *
+		 * @var self
+		 */
 		private static $instance;
 
 		/**
-		 * @return Responsive_Pricing_Table_Admin
+		 * Ensures only one instance of the class is loaded or can be loaded.
+		 *
+		 * @return self
 		 */
 		public static function init() {
 			if ( is_null( self::$instance ) ) {
 				self::$instance = new self();
+
+				add_action( 'init', array( self::$instance, 'pricing_tables' ), 0 );
+				add_action( 'save_post', array( self::$instance, 'save_post' ) );
+				add_action( 'add_meta_boxes', array( self::$instance, 'add_meta_box' ), 9 );
+				add_filter( 'manage_edit-pricing_tables_columns', array( self::$instance, 'columns_head' ) );
+				add_action( 'manage_pricing_tables_posts_custom_column',
+					[ self::$instance, 'columns_content' ], 10, 2 );
+
+				// Remove view and Quick Edit from list table
+				add_filter( 'post_row_actions', array( self::$instance, 'post_row_actions' ), 10, 2 );
+
+				add_action( 'admin_footer', array( self::$instance, 'admin_footer' ) );
 			}
 
 			return self::$instance;
 		}
 
-		use Responsive_Pricing_Table_Form;
-
-		public function __construct() {
-			add_action( 'init', array( $this, 'pricing_tables' ), 0 );
-			add_action( 'save_post', array( $this, 'save_post' ) );
-			add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ), 9 );
-			add_filter( 'manage_edit-pricing_tables_columns', array( $this, 'columns_head' ) );
-			add_action( 'manage_pricing_tables_posts_custom_column', array( $this, 'columns_content' ), 10, 2 );
-			// Remove view and Quick Edit from Carousels
-			add_filter( 'post_row_actions', array( $this, 'post_row_actions' ), 10, 2 );
-
-			add_action( 'admin_footer', array( $this, 'admin_footer' ) );
-		}
-
+		/**
+		 * Add javaScript template
+		 */
 		public function admin_footer() {
 			global $post_type;
 			if ( 'pricing_tables' !== $post_type ) {
@@ -44,29 +53,34 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			require_once RESPONSIVE_PRICING_TABLE_TEMPLATES . '/admin/package.php';
 		}
 
+		/**
+		 * Save package meta
+		 *
+		 * @param int $post_id
+		 */
 		public function save_post( $post_id ) {
 
 			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-				return $post_id;
+				return;
 			}
 
 			if ( ! isset( $_POST['pricing_table_box_nonce'] ) ) {
-				return $post_id;
+				return;
 			}
 
 			if ( ! wp_verify_nonce( $_POST['pricing_table_box_nonce'], 'pricing_table_box' ) ) {
-				return $post_id;
+				return;
 			}
 
 			if ( ! isset( $_POST['post_type'] ) ) {
-				return $post_id;
+				return;
 			}
 
 			if ( 'pricing_tables' !== $_POST['post_type'] ) {
-				return $post_id;
+				return;
 			}
 			if ( ! current_user_can( 'edit_pages', $post_id ) ) {
-				return $post_id;
+				return;
 			}
 
 			$rpt = isset( $_POST['responsive_pricing_table'] ) ? $_POST['responsive_pricing_table'] : array();
@@ -94,10 +108,11 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			}
 
 			update_post_meta( $post_id, "responsive_pricing_table", $new_array );
-
-			return $post_id;
 		}
 
+		/**
+		 * Add meta box
+		 */
 		public function add_meta_box() {
 			add_meta_box(
 				"pricing-table-manage-plans",
@@ -125,6 +140,11 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			);
 		}
 
+		/**
+		 * Meta box callback
+		 *
+		 * @param WP_Post $post
+		 */
 		public function manage_plans( $post ) {
 			$rpt_info = get_post_meta( $post->ID, "responsive_pricing_table", true );
 			$rpt_info = is_array( $rpt_info ) ? $rpt_info : array();
@@ -135,6 +155,11 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			echo $html;
 		}
 
+		/**
+		 * Meta box callback
+		 *
+		 * @param WP_Post $post
+		 */
 		public function preview_meta_box( $post ) {
 			$table_id = $post->ID;
 			$packages = get_post_meta( $table_id, "responsive_pricing_table", true );
@@ -148,6 +173,8 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 		}
 
 		/**
+		 * Meta box callback
+		 *
 		 * @param WP_Post $post
 		 */
 		public function usages_meta_box( $post ) {
@@ -166,6 +193,9 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			<?php
 		}
 
+		/**
+		 * Register post type
+		 */
 		public static function pricing_tables() {
 			$labels = array(
 				'name'               => __( 'Pricing Tables', 'responsive-pricing-table' ),
@@ -205,20 +235,29 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			register_post_type( 'pricing_tables', $args );
 		}
 
-		public function columns_head( $columns ) {
-
+		/**
+		 * Add custom list table column head
+		 *
+		 * @return array
+		 */
+		public function columns_head() {
 			$columns = array(
 				'cb'    => '<input type="checkbox">',
-				'title' => __( 'Pricing Table Name', 'pricingtable' ),
-				'usage' => __( 'Usage (shortcode)', 'pricingtable' )
+				'title' => __( 'Pricing Table Name', 'responsive-pricing-table' ),
+				'usage' => __( 'Usage (shortcode)', 'responsive-pricing-table' )
 			);
 
 			return $columns;
 
 		}
 
+		/**
+		 * Add column content
+		 *
+		 * @param string $column
+		 * @param int $post_id
+		 */
 		public function columns_content( $column, $post_id ) {
-
 			if ( $column == 'usage' ) {
 				?><input
                 type="text"
@@ -231,6 +270,14 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			}
 		}
 
+		/**
+		 * Remove list table row actions
+		 *
+		 * @param array $actions
+		 * @param WP_Post $post
+		 *
+		 * @return array
+		 */
 		public function post_row_actions( $actions, $post ) {
 			global $current_screen;
 			if ( $current_screen->post_type != 'pricing_tables' ) {
@@ -243,7 +290,6 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 			return $actions;
 		}
 	}
-
-endif;
+}
 
 Responsive_Pricing_Table_Admin::init();
