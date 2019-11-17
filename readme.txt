@@ -1,13 +1,12 @@
 === Responsive Pricing Table ===
-Contributors: sayful
-Tags: plugin, shortcode, pricing table, responsive pricing table, easy pricing table
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3LZWQTHEVYWCY
-Requires at least: 4.0
-Tested up to: 4.8
-Requires PHP: 5.4
-Stable tag: 1.2.1
-License: GPLv3
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Contributors:       sayful
+Tags:               pricing-table, responsive-pricing-table, easy-pricing-table
+Requires PHP:       5.6
+Requires at least:  5.0
+Tested up to:       5.3
+Stable tag:         1.2.1
+License:            GPLv3
+License URI:        http://www.gnu.org/licenses/gpl-3.0.html
 
 A WordPress plugin allow you generate and manage CSS3 pricing table or comparison table with table generator by WordPress Custom Post in the easy way. 
 

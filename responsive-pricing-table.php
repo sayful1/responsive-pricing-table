@@ -6,8 +6,6 @@
  * Version:             1.2.1
  * Author:              Sayful Islam
  * Author URI:          https://sayfulislam.com
- * Requires at least:   4.0
- * Tested up to:        4.8
  * Text Domain:         responsive-pricing-table
  * License:             GPLv3
  * License URI:         https://www.gnu.org/licenses/gpl-3.0.txt
