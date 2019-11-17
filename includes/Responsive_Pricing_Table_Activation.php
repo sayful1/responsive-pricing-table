@@ -4,10 +4,17 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Activation' ) ) {
 
 	class Responsive_Pricing_Table_Activation {
 
-		private static $instance;
+		/**
+		 * The instance of the class
+		 *
+		 * @var self
+		 */
+		private static $instance = null;
 
 		/**
-		 * @return Responsive_Pricing_Table_Activation
+		 * Ensures only one instance of the class is loaded or can be loaded.
+		 *
+		 * @return self
 		 */
 		public static function init() {
 			if ( is_null( self::$instance ) ) {

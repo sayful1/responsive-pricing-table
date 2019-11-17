@@ -8,10 +8,17 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 
 	class Responsive_Pricing_Table_Admin {
 
-		private static $instance;
+		/**
+		 * The instance of the class
+		 *
+		 * @var self
+		 */
+		private static $instance = null;
 
 		/**
-		 * @return Responsive_Pricing_Table_Admin
+		 * Ensures only one instance of the class is loaded or can be loaded.
+		 *
+		 * @return self
 		 */
 		public static function init() {
 			if ( is_null( self::$instance ) ) {
@@ -192,14 +199,9 @@ if ( ! class_exists( 'Responsive_Pricing_Table_Admin' ) ):
 
 		public function preview_meta_box( $post ) {
 			$table_id = $post->ID;
-			$currency = Responsive_Pricing_Table_Currency::init();
 			$packages = get_post_meta( $table_id, "_pricing_table_content", true );
 			$packages = is_array( $packages ) ? $packages : array();
-			$columns  = count( $packages );
-			ob_start();
-			require RESPONSIVE_PRICING_TABLE_TEMPLATES . '/public/pricing-table.php';
-			$html = ob_get_contents();
-			ob_end_clean();
+			$html     = Responsive_Pricing_Table_ShortCode::get_pricing_table_html( $table_id, $packages );
 			echo $html;
 		}
 

@@ -1,20 +1,15 @@
 <?php
 
+// If this file is called directly, abort.
+defined( 'ABSPATH' ) || die;
+
 class Responsive_Pricing_Table_Currency {
 
-	private static $instance;
-
 	/**
-	 * @return Responsive_Pricing_Table_Currency
+	 * Supported currency list
+	 *
+	 * @return array
 	 */
-	public static function init() {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new self();
-		}
-
-		return self::$instance;
-	}
-
 	public static function currency_list() {
 		return [
 			''             => __( 'None', 'responsive-pricing-table' ),
@@ -46,7 +41,7 @@ class Responsive_Pricing_Table_Currency {
 	 *
 	 * @return mixed|string
 	 */
-	public function get_symbol( $symbol_name ) {
+	public static function get_symbol( $symbol_name ) {
 		$symbols = [
 			'baht'         => '&#3647;',
 			'bdt'          => '&#2547;',

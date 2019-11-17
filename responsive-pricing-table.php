@@ -3,59 +3,70 @@
  * Plugin Name:         Responsive Pricing Table
  * Plugin URI:          http://wordpress.org/plugins/responsive-pricing-table/
  * Description:         Dynamic responsive pricing table for WordPress.
- * Version:             1.2.1
+ * Version:             2.0.0
  * Author:              Sayful Islam
  * Author URI:          https://sayfulislam.com
- * Requires at least:   4.0
- * Tested up to:        4.8
  * Text Domain:         responsive-pricing-table
  * License:             GPLv3
  * License URI:         https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
+defined( 'ABSPATH' ) || die;
 
 if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 
 	class Responsive_Pricing_Table {
 
+		/**
+		 * Plugin name
+		 *
+		 * @var string
+		 */
 		private $plugin_name = 'responsive-pricing-table';
-		private $plugin_version = '1.2.1';
-		protected static $instance = null;
 
 		/**
-		 * Main Responsive_Pricing_Table Instance
-		 * Ensures only one instance of Responsive_Pricing_Table is loaded or can be loaded.
+		 * Plugin version
+		 *
+		 * @var string
+		 */
+		private $plugin_version = '1.2.1';
+
+		/**
+		 * The instance of the class
+		 *
+		 * @var self
+		 */
+		private static $instance = null;
+
+		/**
+		 * Ensures only one instance of the class is loaded or can be loaded.
+		 *
+		 * @return self
 		 */
 		public static function instance() {
-			if ( null == self::$instance ) {
+			if ( is_null( self::$instance ) ) {
 				self::$instance = new self;
+
+				// define constants
+				self::$instance->define_constants();
+
+				add_action( 'admin_enqueue_scripts', array( self::$instance, 'admin_scripts' ) );
+				add_action( 'wp_enqueue_scripts', array( self::$instance, 'front_scripts' ), 20 );
+
+				self::$instance->includes();
+
+				add_action( 'plugins_loaded', array( self::$instance, 'load_textdomain' ) );
+
+				register_activation_hook( __FILE__, array( self::$instance, 'plugin_activation' ) );
+				register_deactivation_hook( __FILE__, array( self::$instance, 'plugin_deactivate' ) );
 			}
 
 			return self::$instance;
 		}
 
-		public function __construct() {
-			// define constants
-			$this->define_constants();
-
-			register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
-			register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivate' ) );
-
-			add_action( 'init', array( $this, 'load_textdomain' ) );
-			add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
-			add_action( 'wp_enqueue_scripts', array( $this, 'front_scripts' ), 20 );
-
-			// add_action( 'elementor/widgets/widgets_registered', array( $this, 'init_widgets' ) );
-
-			$this->includes();
-		}
-
 		/**
-		 * Define constants
+		 * Define plugin constants
 		 */
 		private function define_constants() {
 			define( 'RESPONSIVE_PRICING_TABLE_VERSION', $this->plugin_version );
@@ -68,30 +79,11 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 		}
 
 		/**
-		 * Define constant if not already set.
-		 *
-		 * @param  string $name
-		 * @param  string|bool $value
-		 */
-		private function define( $name, $value ) {
-			if ( ! defined( $name ) ) {
-				define( $name, $value );
-			}
-		}
-
-		/**
-		 * Register Widget for Elementor Page builder
-		 */
-		public function init_widgets() {
-			include_once RESPONSIVE_PRICING_TABLE_INCLUDES . '/Responsive_Pricing_Table_Elementor.php';
-		}
-
-		/**
 		 * Load plugin textdomain
 		 */
 		public function load_textdomain() {
-			$locale_file = sprintf( '%1$s-%2$s.mo', 'responsive-pricing-table', get_locale() );
-			$global_file = join( DIRECTORY_SEPARATOR, array( WP_LANG_DIR, 'responsive-pricing-table', $locale_file ) );
+			$locale_file = sprintf( '%1$s-%2$s.mo', $this->plugin_name, get_locale() );
+			$global_file = join( DIRECTORY_SEPARATOR, array( WP_LANG_DIR, $this->plugin_name, $locale_file ) );
 
 			// Look in global /wp-content/languages/carousel-slider folder
 			if ( file_exists( $global_file ) ) {
@@ -110,6 +102,9 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 			include_once RESPONSIVE_PRICING_TABLE_INCLUDES . '/Responsive_Pricing_Table_Shortcode.php';
 		}
 
+		/**
+		 * Load admin scripts
+		 */
 		public function admin_scripts() {
 			global $post_type;
 			if ( 'pricing_tables' !== $post_type ) {
@@ -139,6 +134,9 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 			);
 		}
 
+		/**
+		 * Load frontend scripts
+		 */
 		public function front_scripts() {
 			wp_enqueue_style(
 				$this->plugin_name,
