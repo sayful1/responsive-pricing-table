@@ -1,10 +1,10 @@
 (function ($) {
     'use strict';
 
-    var plans_container = $('#rpt_manage_plans'),
+    let plans_container = $('#rpt_manage_plans'),
         template = $('#template-responsive-pricing-table-package').html();
 
-    var updatePackageIndex = function () {
+    let updatePackageIndex = function () {
         $(document).find('.rpt-package').each(function (index) {
             var _package = $(this),
                 _features = _package.find('.tab-rpt-features').find('.rpt-feature');
@@ -33,7 +33,7 @@
         // Update package index
         updatePackageIndex();
 
-        var last_package = plans_container.find('.rpt-package').last();
+        let last_package = plans_container.find('.rpt-package').last();
         // Update Accordion
         last_package.accordion({
             collapsible: true,
@@ -41,7 +41,7 @@
             active: false
         });
         last_package.find(".rpt-feature").each(function () {
-            var _this = $(this);
+            let _this = $(this);
 
             if (_this.attr('data-id') === 'closed') {
                 _this.accordion({
@@ -79,7 +79,7 @@
     $(document).on('click', '.deletePackage', function (e) {
         e.preventDefault();
 
-        var total_packages = plans_container.find('.rpt-package').length;
+        let total_packages = plans_container.find('.rpt-package').length;
 
         if (total_packages === 1) {
             alert('You cannot delete all package.');
@@ -87,7 +87,7 @@
         }
 
         if (confirm('Are you sure to delete this package?')) {
-            var _this = $(this).closest('.rpt-package');
+            let _this = $(this).closest('.rpt-package');
             _this.slideUp('slow', function () {
                 _this.remove();
                 // Update package index
@@ -100,7 +100,7 @@
     $(document).on('click', '.addPackageFeature', function (e) {
         e.preventDefault();
 
-        var rpt_feature_wrap = $(this).parent().find('.rpt-feature-wrap'),
+        let rpt_feature_wrap = $(this).parent().find('.rpt-feature-wrap'),
             rpt_feature = rpt_feature_wrap.find('.rpt-feature').first(),
             new_feature = rpt_feature.clone(true);
 
@@ -113,7 +113,7 @@
     $(document).on('click', '.deleteFeature', function (e) {
         e.preventDefault();
 
-        var _this = $(this),
+        let _this = $(this),
             rpt_feature = _this.closest('.rpt-feature'),
             rpt_feature_wrap = _this.closest('.rpt-feature-wrap'),
             total_features = rpt_feature_wrap.find('.rpt-feature').length;
@@ -143,7 +143,7 @@
     });
 
     $(document).find(".shapla-toggle").each(function () {
-        var _this = $(this);
+        let _this = $(this);
 
         if (_this.attr('data-id') === 'closed') {
             _this.accordion({
@@ -178,4 +178,4 @@
         $(this).wpColorPicker();
     });
 
-})(jQuery);
+})(window.jQuery);

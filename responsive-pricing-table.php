@@ -30,7 +30,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 		 *
 		 * @var string
 		 */
-		private $plugin_version = '1.2.1';
+		private $plugin_version = '2.0.0';
 
 		/**
 		 * The instance of the class
