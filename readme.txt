@@ -4,7 +4,7 @@ Tags:               pricing-table, responsive-pricing-table, easy-pricing-table
 Requires PHP:       5.6
 Requires at least:  5.0
 Tested up to:       5.3
-Stable tag:         1.2.1
+Stable tag:         1.2.2
 License:            GPLv3
 License URI:        http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -44,6 +44,9 @@ Do you have questions or issues with Responsive Pricing Table? [Ask for support 
 4. Screenshot of Pricing Tables (Add New).
 
 == Changelog ==
+
+= Version 1.2.2 - 2019-11-18 =
+* Dev - Check version compatibility with WordPress 5.3
 
 = Version 1.2.1 - 2017-10-12 =
 * Fixed - Fix issue: Post.php edit page categories broken.

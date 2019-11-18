@@ -3,7 +3,7 @@
  * Plugin Name:         Responsive Pricing Table
  * Plugin URI:          http://wordpress.org/plugins/responsive-pricing-table/
  * Description:         Dynamic responsive pricing table for WordPress.
- * Version:             1.2.1
+ * Version:             1.2.2
  * Author:              Sayful Islam
  * Author URI:          https://sayfulislam.com
  * Text Domain:         responsive-pricing-table
@@ -30,7 +30,7 @@ if ( ! class_exists( 'Responsive_Pricing_Table' ) ):
 		 *
 		 * @var string
 		 */
-		private $plugin_version = '1.2.1';
+		private $plugin_version = '1.2.2';
 
 		/**
 		 * The instance of the class
