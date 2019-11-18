@@ -1,4 +1,6 @@
-<p><span id='addNewPackage' class="button button-default"><?php _e( 'Add New Package' ); ?></span></p>
+<p><span id='addNewPackage' class="button button-default"><?php use Sayful\PricingTable\Currency;
+
+		_e( 'Add New Package' ); ?></span></p>
 <div id="rpt_manage_plans">
 	<?php foreach ( $packages as $package ): ?>
 
@@ -56,7 +58,7 @@
                             </div>
                             <div id="rpt-tab-pricing" class="shapla-tab tab-rpt-pricing">
 								<?php
-								$currency = Responsive_Pricing_Table_Currency::currency_list();
+								$currency = Currency::currency_list();
 								$this->select( array(
 									'id'       => 'currency_symbol',
 									'name'     => __( 'Currency Symbol', 'responsive-pricing-table' ),

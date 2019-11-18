@@ -16,7 +16,6 @@ let entryPoints = {
     ],
     frontend: [
         "./assets/src/scss/frontend.scss",
-        "./assets/src/frontend/main.js",
     ]
 };
 

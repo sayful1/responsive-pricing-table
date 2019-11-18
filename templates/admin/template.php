@@ -1,7 +1,9 @@
 <template id="template-responsive-pricing-table-package" style="display: none;">
     <div data-id="closed" class="rpt-package responsive-pricing-table-package shapla-toggle shapla-toggle--stroke">
     <span class="shapla-toggle-title">
-        <?php esc_html_e( 'Package:', 'responsive-pricing-table' ); ?>
+        <?php use Sayful\PricingTable\Currency;
+
+        esc_html_e( 'Package:', 'responsive-pricing-table' ); ?>
         <span class="package_title"></span>
     </span>
         <div class="shapla-toggle-inner">
@@ -53,7 +55,7 @@
                         </div>
                         <div id="rpt-tab-pricing" class="shapla-tab tab-rpt-pricing">
 							<?php
-							$currency = Responsive_Pricing_Table_Currency::currency_list();
+							$currency = Currency::currency_list();
 							$this->select( array(
 								'id'       => 'currency_symbol',
 								'name'     => __( 'Currency Symbol', 'responsive-pricing-table' ),

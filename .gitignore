@@ -1,7 +1,8 @@
-#Folders
-.idea/
-.sass-cache/
-node_modules/
+# Folders
+.idea
+node_modules
+assets/css
+assets/js
 
-#Files
+# Files
 package-lock.json

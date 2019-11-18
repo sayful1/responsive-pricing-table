@@ -1,9 +1,11 @@
 <?php
 
+namespace Sayful\PricingTable;
+
 // If this file is called directly, abort.
 defined( 'ABSPATH' ) || die;
 
-class Responsive_Pricing_Table_Currency {
+class Currency {
 
 	/**
 	 * Supported currency list

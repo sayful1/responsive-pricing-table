@@ -1,9 +1,13 @@
 <?php
 
+namespace Sayful\PricingTable\Frontend;
+
+use Sayful\PricingTable\Currency;
+
 // If this file is called directly, abort.
 defined( 'ABSPATH' ) || die;
 
-class Responsive_Pricing_Table_ShortCode {
+class Frontend {
 
 	/**
 	 * The instance of the class
@@ -99,7 +103,7 @@ class Responsive_Pricing_Table_ShortCode {
 
             <div class="responsive-pricing-table__price">
 				<?php
-				$_symbol  = ! empty( $package['currency_symbol'] ) ? Responsive_Pricing_Table_Currency::get_symbol( $package['currency_symbol'] ) : '&#36;';
+				$_symbol  = ! empty( $package['currency_symbol'] ) ? Currency::get_symbol( $package['currency_symbol'] ) : '&#36;';
 				$price    = explode( '.', $package['price'] );
 				$integer  = $price[0];
 				$fraction = '';
@@ -195,5 +199,3 @@ class Responsive_Pricing_Table_ShortCode {
 		return $html;
 	}
 }
-
-Responsive_Pricing_Table_ShortCode::init();
