@@ -52,9 +52,6 @@ class Responsive_Pricing_Table {
 			// Include Classes
 			self::$instance->include_classes();
 
-			add_action( 'admin_enqueue_scripts', array( self::$instance, 'admin_scripts' ) );
-			add_action( 'wp_enqueue_scripts', array( self::$instance, 'front_scripts' ), 20 );
-
 			// initialize the classes
 			add_action( 'plugins_loaded', array( self::$instance, 'init_classes' ) );
 
@@ -71,7 +68,8 @@ class Responsive_Pricing_Table {
 	 * Define plugin constants
 	 */
 	private function define_constants() {
-		define( 'RESPONSIVE_PRICING_TABLE_VERSION', $this->plugin_version );
+		define( 'RESPONSIVE_PRICING_TABLE', $this->plugin_name );
+		define( 'RESPONSIVE_PRICING_TABLE_VERSION', $this->get_plugin_version() );
 		define( 'RESPONSIVE_PRICING_TABLE_FILE', __FILE__ );
 		define( 'RESPONSIVE_PRICING_TABLE_PATH', dirname( RESPONSIVE_PRICING_TABLE_FILE ) );
 		define( 'RESPONSIVE_PRICING_TABLE_INCLUDES', RESPONSIVE_PRICING_TABLE_PATH . '/includes' );
@@ -137,52 +135,8 @@ class Responsive_Pricing_Table {
 	public function init_classes() {
 		Sayful\PricingTable\Admin\Admin::init();
 		Sayful\PricingTable\Frontend\Frontend::init();
+		Sayful\PricingTable\Assets::init();
 		Sayful\PricingTable\REST\PricingTableController::init();
-	}
-
-	/**
-	 * Load admin scripts
-	 */
-	public function admin_scripts() {
-		global $post_type;
-		if ( 'pricing_tables' !== $post_type ) {
-			return;
-		}
-
-		wp_enqueue_style(
-			$this->plugin_name . '-admin',
-			RESPONSIVE_PRICING_TABLE_ASSETS . '/css/admin.css',
-			array( 'wp-color-picker' ),
-			RESPONSIVE_PRICING_TABLE_VERSION,
-			'all'
-		);
-
-		wp_enqueue_script(
-			$this->plugin_name . '-admin',
-			RESPONSIVE_PRICING_TABLE_ASSETS . '/js/admin.js',
-			array(
-				'jquery',
-				'jquery-ui-accordion',
-				'jquery-ui-tabs',
-				'jquery-ui-sortable',
-				'wp-color-picker'
-			),
-			RESPONSIVE_PRICING_TABLE_VERSION,
-			true
-		);
-	}
-
-	/**
-	 * Load frontend scripts
-	 */
-	public function front_scripts() {
-		wp_enqueue_style(
-			$this->plugin_name,
-			RESPONSIVE_PRICING_TABLE_ASSETS . '/css/frontend.css',
-			array(),
-			RESPONSIVE_PRICING_TABLE_VERSION,
-			'all'
-		);
 	}
 
 	/**
@@ -202,6 +156,19 @@ class Responsive_Pricing_Table {
 	public function plugin_deactivate() {
 		do_action( 'responsive_pricing_table_deactivate' );
 		flush_rewrite_rules();
+	}
+
+	/**
+	 * Get plugin version
+	 *
+	 * @return string
+	 */
+	public function get_plugin_version() {
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			$this->plugin_version = $this->plugin_version . '-' . time();
+		}
+
+		return $this->plugin_version;
 	}
 }
 

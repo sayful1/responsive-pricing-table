@@ -3,6 +3,7 @@
 namespace Sayful\PricingTable\Admin;
 
 use Sayful\PricingTable\Frontend\Frontend;
+use Sayful\PricingTable\Helper;
 use \WP_Post;
 
 // If this file is called directly, abort.
@@ -46,7 +47,7 @@ class Admin {
 
 	public function admin_footer() {
 		global $post_type;
-		if ( 'pricing_tables' !== $post_type ) {
+		if ( Helper::POST_TYPE !== $post_type ) {
 			return;
 		}
 
@@ -78,7 +79,7 @@ class Admin {
 			return $post_id;
 		}
 
-		if ( 'pricing_tables' !== $_POST['post_type'] ) {
+		if ( Helper::POST_TYPE !== $_POST['post_type'] ) {
 			return $post_id;
 		}
 
@@ -227,25 +228,10 @@ class Admin {
 	}
 
 	public static function pricing_tables() {
-		$labels = array(
-			'name'               => __( 'Pricing Tables', 'responsive-pricing-table' ),
-			'singular_name'      => __( 'Pricing Table', 'responsive-pricing-table' ),
-			'menu_name'          => __( 'Pricing Tables', 'responsive-pricing-table' ),
-			'parent_item_colon'  => __( 'Parent Table:', 'responsive-pricing-table' ),
-			'all_items'          => __( 'Pricing Tables', 'responsive-pricing-table' ),
-			'view_item'          => __( 'View Table', 'responsive-pricing-table' ),
-			'add_new_item'       => __( 'Add New Table', 'responsive-pricing-table' ),
-			'add_new'            => __( 'Add New', 'responsive-pricing-table' ),
-			'edit_item'          => __( 'Edit Table', 'responsive-pricing-table' ),
-			'update_item'        => __( 'Update Table', 'responsive-pricing-table' ),
-			'search_items'       => __( 'Search Table', 'responsive-pricing-table' ),
-			'not_found'          => __( 'Not found', 'responsive-pricing-table' ),
-			'not_found_in_trash' => __( 'Not found in Trash', 'responsive-pricing-table' ),
-		);
-		$args   = array(
+		$args = array(
 			'label'               => __( 'Pricing Tables', 'responsive-pricing-table' ),
 			'description'         => __( 'Pricing Tables', 'responsive-pricing-table' ),
-			'labels'              => $labels,
+			'labels'              => Helper::get_post_type_labels(),
 			'supports'            => array( 'title' ),
 			'hierarchical'        => false,
 			'public'              => false,
@@ -262,7 +248,7 @@ class Admin {
 			'rewrite'             => false,
 			'capability_type'     => 'post',
 		);
-		register_post_type( 'pricing_tables', $args );
+		register_post_type( Helper::POST_TYPE, $args );
 	}
 
 	public function columns_head( $columns ) {
@@ -278,7 +264,6 @@ class Admin {
 	}
 
 	public function columns_content( $column, $post_id ) {
-
 		if ( $column == 'usage' ) {
 			?><input
             type="text"
@@ -293,7 +278,7 @@ class Admin {
 
 	public function post_row_actions( $actions, $post ) {
 		global $current_screen;
-		if ( $current_screen->post_type != 'pricing_tables' ) {
+		if ( $current_screen->post_type != Helper::POST_TYPE ) {
 			return $actions;
 		}
 
@@ -311,43 +296,6 @@ class Admin {
 	 * @return mixed|string
 	 */
 	private function sanitize_color( $color ) {
-		if ( '' === $color ) {
-			return '';
-		}
-
-		// Trim unneeded whitespace
-		$color = str_replace( ' ', '', $color );
-
-		// If this is hex color, validate and return it
-		if ( 1 === preg_match( '|^#([A-Fa-f0-9]{3}){1,2}$|', $color ) ) {
-			return $color;
-		}
-
-		// If this is rgb, validate and return it
-		if ( 'rgb(' === substr( $color, 0, 4 ) ) {
-			list( $red, $green, $blue ) = sscanf( $color, 'rgb(%d,%d,%d)' );
-
-			if ( ( $red >= 0 && $red <= 255 ) &&
-			     ( $green >= 0 && $green <= 255 ) &&
-			     ( $blue >= 0 && $blue <= 255 )
-			) {
-				return "rgb({$red},{$green},{$blue})";
-			}
-		}
-
-		// If this is rgba, validate and return it
-		if ( 'rgba(' === substr( $color, 0, 5 ) ) {
-			list( $red, $green, $blue, $alpha ) = sscanf( $color, 'rgba(%d,%d,%d,%f)' );
-
-			if ( ( $red >= 0 && $red <= 255 ) &&
-			     ( $green >= 0 && $green <= 255 ) &&
-			     ( $blue >= 0 && $blue <= 255 ) &&
-			     $alpha >= 0 && $alpha <= 1
-			) {
-				return "rgba({$red},{$green},{$blue},{$alpha})";
-			}
-		}
-
-		return '';
+		return Helper::sanitize_color( $color );
 	}
 }

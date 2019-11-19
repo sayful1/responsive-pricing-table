@@ -78,7 +78,13 @@ class PricingTableController extends WP_REST_Controller {
 	 * @return WP_Error|WP_REST_Response Response object on success, or WP_Error object on failure.
 	 */
 	public function create_item( $request ) {
+		$title    = $request->get_param( 'title' );
+		$packages = $request->get_param( 'packages' );
+		$packages = is_array( $packages ) ? $packages : [];
 
+		$response = [];
+
+		return rest_ensure_response( $response );
 	}
 
 	/**
@@ -88,20 +94,14 @@ class PricingTableController extends WP_REST_Controller {
 	 */
 	public function get_create_item_params() {
 		return [
-			'package_title'    => [ 'type' => 'string', ],
-			'package_subtitle' => [ 'type' => 'string', ],
-			'currency_symbol'  => [ 'type' => 'string', ],
-			'price'            => [ 'type' => 'string', ],
-			'original_price'   => [ 'type' => 'string', ],
-			'period'           => [ 'type' => 'string', ],
-			'sale'             => [ 'type' => 'string', ],
-			'features'         => [ 'type' => 'array', ],
-			'button_text'      => [ 'type' => 'string', ],
-			'button_link'      => [ 'type' => 'string', ],
-			'additional_info'  => [ 'type' => 'string', ],
-			'show_ribbon'      => [ 'type' => 'string', ],
-			'ribbon_title'     => [ 'type' => 'string', ],
-			'ribbon_position'  => [ 'type' => 'string', ],
+			'title'    => [
+				'type'     => 'string',
+				'required' => true,
+			],
+			'packages' => [
+				'type'     => 'array',
+				'required' => true,
+			],
 		];
 	}
 }
